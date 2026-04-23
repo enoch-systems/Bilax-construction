@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bilax Constructions - Construction Services Website
+
+A modern, responsive construction company website built with Next.js and React, featuring a hero section with video backgrounds, services showcase, project portfolio, and contact information.
+
+## Project Overview
+
+Bilax Constructions is a professional construction company website designed to showcase comprehensive construction services including interior design, construction, architecture, engineering, and renovation. It features a responsive design with video backgrounds, mobile-optimized navigation with slide-in menu, and a dark aesthetic theme throughout.
+
+## Features
+
+### Core Functionality
+- Hero section with dual video backgrounds (mobile and desktop layouts)
+- Full-height slide-in mobile menu with smooth 700ms animation
+- Backdrop blur overlay when mobile menu is open
+- About Us section with company description
+- Projects portfolio with hover effects and view project buttons
+- Services showcase with visual indicators
+- Responsive footer with contact information and social links
+- Click-to-call phone number integration
+- Mobile-responsive navigation with hamburger menu
+
+### Technical Highlights
+- Responsive video backgrounds with conditional rendering
+- React hooks (useState, useRef) for state management
+- Click outside detection for menu closing
+- CSS transitions and transforms for smooth animations
+- Layering with CSS z-index for overlays
+- Tailwind CSS utility classes for styling
+- Optimized performance with automatic code splitting
+- SEO-friendly structure with proper metadata
+
+## Tech Stack
+
+### Frontend
+- Next.js
+- React
+- TypeScript
+
+### Styling
+- Tailwind CSS
+- PostCSS
+
+### Tools
+- ESLint
+- Git
+- Node.js
+
+## Project Structure
+
+```bash
+construction/
+├── public/
+│   ├── video1.mp4
+│   └── video2.mp4
+├── src/
+│   ├── app/
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   └── components/
+│       ├── AboutUs.tsx
+│       ├── AboutFeatures.tsx
+│       ├── ConstructionVision.tsx
+│       ├── Footer.tsx
+│       ├── Header.tsx
+│       ├── Hero.tsx
+│       └── Projects.tsx
+├── package.json
+├── tsconfig.json
+├── next.config.ts
+├── tailwind.config.ts
+└── README.md
+```
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Clone the repository
+git clone <repository-url>
+cd construction
+
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deployment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project can be deployed on Vercel, Netlify, or any Next.js-compatible hosting platform.
 
-## Learn More
+## Contact
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Phone: [+2349162919586](tel:+2349162919586)
+- Email: info@bilaxconstructions.com
+- Address: Plot 166 tenant road, Aba, Abia State, Nigeria
