@@ -41,7 +41,7 @@ export default function Header({ onMenuOpenChange }: HeaderProps) {
   }, [isOpen, onMenuOpenChange]);
 
   return (
-    <header ref={headerRef} className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-gradient-to-b from-slate-950/95 to-slate-950/90 backdrop-blur-xl">
+    <header ref={headerRef} className="fixed top-0 left-0 right-0 z-50 bg-transparent backdrop-blur-xl  border-b border-slate-900/4">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-4">
         <div className="flex flex-col">
           <img src="/logo.png" alt="Bilax Constructions logo" className="h-10 w-12 mb-1" />
