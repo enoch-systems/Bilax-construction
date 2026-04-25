@@ -10,13 +10,15 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const handleMenuChange = (open: boolean) => {
     setIsMenuOpen(open);
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setIsLoaded(true);
   }, []);
 
   return (

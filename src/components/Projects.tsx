@@ -26,7 +26,7 @@ export default function Projects() {
                 alt="Commercial Building" 
                 className="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-110 md:h-64"
               />
-              <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-100 transition-opacity duration-300">
                 <button className="rounded-sm border border-amber-500/30 bg-amber-500/10 px-5 py-2 text-sm font-medium text-amber-100 transition-all hover:border-amber-500/50 hover:bg-amber-500/20 md:px-6 md:text-base">View Project</button>
               </div>
             </div>
@@ -41,7 +41,7 @@ export default function Projects() {
                 alt="Residential Complex" 
                 className="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-110 md:h-64"
               />
-              <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-100 transition-opacity duration-300">
                 <button className="rounded-sm border border-amber-500/30 bg-amber-500/10 px-5 py-2 text-sm font-medium text-amber-100 transition-all hover:border-amber-500/50 hover:bg-amber-500/20 md:px-6 md:text-base">View Project</button>
               </div>
             </div>
@@ -56,7 +56,7 @@ export default function Projects() {
                 alt="Industrial Facility" 
                 className="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-110 md:h-64"
               />
-              <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-100 transition-opacity duration-300">
                 <button className="rounded-sm border border-amber-500/30 bg-amber-500/10 px-5 py-2 text-sm font-medium text-amber-100 transition-all hover:border-amber-500/50 hover:bg-amber-500/20 md:px-6 md:text-base">View Project</button>
               </div>
             </div>
@@ -71,7 +71,7 @@ export default function Projects() {
                 alt="Shopping Mall" 
                 className="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-110 md:h-64"
               />
-              <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-100 transition-opacity duration-300">
                 <button className="rounded-sm border border-amber-500/30 bg-amber-500/10 px-5 py-2 text-sm font-medium text-amber-100 transition-all hover:border-amber-500/50 hover:bg-amber-500/20 md:px-6 md:text-base">View Project</button>
               </div>
             </div>
@@ -86,7 +86,7 @@ export default function Projects() {
                 alt="Healthcare Center" 
                 className="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-110 md:h-64"
               />
-              <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-100 transition-opacity duration-300">
                 <button className="rounded-sm border border-amber-500/30 bg-amber-500/10 px-5 py-2 text-sm font-medium text-amber-100 transition-all hover:border-amber-500/50 hover:bg-amber-500/20 md:px-6 md:text-base">View Project</button>
               </div>
             </div>
@@ -101,7 +101,7 @@ export default function Projects() {
                 alt="Educational Campus" 
                 className="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-110 md:h-64"
               />
-              <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-100 transition-opacity duration-300">
                 <button className="rounded-sm border border-amber-500/30 bg-amber-500/10 px-5 py-2 text-sm font-medium text-amber-100 transition-all hover:border-amber-500/50 hover:bg-amber-500/20 md:px-6 md:text-base">View Project</button>
               </div>
             </div>
