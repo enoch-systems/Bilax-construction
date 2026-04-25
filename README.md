@@ -88,6 +88,29 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Cloudinary Video Setup
+
+To load hero videos from Cloudinary instead of local files:
+
+1. Copy `.env.example` to `.env.local`.
+2. Set these values:
+   - `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`
+   - `NEXT_PUBLIC_CLOUDINARY_HERO_VIDEO_1`
+   - `NEXT_PUBLIC_CLOUDINARY_HERO_VIDEO_2`
+3. Restart the dev server.
+
+Example:
+
+```bash
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=mycloud
+NEXT_PUBLIC_CLOUDINARY_HERO_VIDEO_1=construction/video1
+NEXT_PUBLIC_CLOUDINARY_HERO_VIDEO_2=construction/video2
+```
+
+The app will use:
+`https://res.cloudinary.com/<cloud-name>/video/upload/f_auto,q_auto/<public-id>`
+No local video fallback is used. Hero videos load from Cloudinary only.
+
 ## Deployment
 
 This project can be deployed on Vercel, Netlify, or any Next.js-compatible hosting platform.

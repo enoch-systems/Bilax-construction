@@ -1,17 +1,24 @@
 export default function AboutUs() {
   return (
-    <section className="py-12 md:py-20 bg-gray-900">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col items-center text-center gap-8 md:gap-12">
-          <div className="max-w-3xl">
-            <p className="text-orange-500 font-semibold mb-2 text-sm md:text-base">About Us</p>
-            <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight">
-              Our Reputation is as Solid as Concrete
-            </h2>
-            <p className="text-base md:text-xl text-gray-300 mb-6 md:mb-8 leading-relaxed">
-              Conzone Construction is about transforming ideas into reality. We're about creating spaces that inspire, connect, and uplift. With years of experience and a commitment to excellence, we bring your vision to life with precision and care.
+    <section className="bg-gradient-to-b from-slate-950/95 to-slate-900/90 py-20 md:py-28">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="mx-auto max-w-4xl border-l-2 border-white/10 bg-slate-950/40 p-10 backdrop-blur-md md:p-14">
+          <div className="mb-8 flex items-center justify-center gap-3">
+            <div className="h-px w-12 bg-gradient-to-r from-amber-500/50 to-transparent" />
+            <p className="text-xs font-medium uppercase tracking-[0.3em] text-amber-400/90">
+              About Us
             </p>
-            <button className="bg-orange-500 text-white px-6 py-2 md:px-8 md:py-3 rounded-full font-medium hover:bg-orange-600 transition-colors text-sm md:text-base">
+            <div className="h-px w-12 bg-gradient-to-l from-amber-500/50 to-transparent" />
+          </div>
+          <h2 className="mb-8 text-center text-3xl font-light tracking-tight text-white uppercase md:text-5xl">
+            Our Reputation is as<br />
+            <span className="font-semibold">Solid as Concrete</span>
+          </h2>
+          <p className="mx-auto mb-12 max-w-3xl text-center text-base leading-relaxed text-slate-400 md:text-xl">
+            Conzone Construction transforms ideas into reality by creating spaces that inspire, connect, and uplift. With years of experience and a steadfast commitment to excellence, we bring every vision to life with precision and care.
+          </p>
+          <div className="flex justify-center">
+            <button className="rounded-sm border border-amber-500/30 bg-amber-500/10 px-9 py-3.5 text-sm font-medium text-amber-100 transition-all hover:border-amber-500/50 hover:bg-amber-500/20 md:px-11 md:text-base">
               Learn More
             </button>
           </div>
