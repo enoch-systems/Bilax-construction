@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 function getCloudinaryVideoUrl(publicId?: string) {
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
@@ -15,6 +15,37 @@ interface HeroProps {
 export default function Hero({ isMenuOpen }: HeroProps) {
   const video1Src = getCloudinaryVideoUrl(process.env.NEXT_PUBLIC_CLOUDINARY_HERO_VIDEO_1) ?? "/video1.mp4";
   const video2Src = getCloudinaryVideoUrl(process.env.NEXT_PUBLIC_CLOUDINARY_HERO_VIDEO_2) ?? "/video2.mp4";
+  const videoRef1 = useRef<HTMLVideoElement>(null);
+  const videoRef2 = useRef<HTMLVideoElement>(null);
+  const videoRef3 = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const videos = [videoRef1.current, videoRef2.current, videoRef3.current].filter(Boolean) as HTMLVideoElement[];
+    
+    videos.forEach(video => {
+      const handleCanPlay = () => {
+        video.play().catch(err => {
+          console.log('Autoplay prevented:', err);
+        });
+      };
+
+      const handleError = () => {
+        console.log('Video error, retrying...');
+        setTimeout(() => {
+          video.load();
+          video.play().catch(() => {});
+        }, 1000);
+      };
+
+      video.addEventListener('canplay', handleCanPlay);
+      video.addEventListener('error', handleError);
+
+      return () => {
+        video.removeEventListener('canplay', handleCanPlay);
+        video.removeEventListener('error', handleError);
+      };
+    });
+  }, []);
 
   return (
     <>
@@ -37,10 +68,12 @@ export default function Hero({ isMenuOpen }: HeroProps) {
       <section className="relative flex min-h-screen flex-col overflow-hidden bg-slate-950">
       <div className="absolute inset-0 flex md:hidden">
         <video 
+          ref={videoRef1}
           autoPlay 
           loop 
           muted 
           playsInline
+          preload="auto"
           className="h-full w-full object-cover opacity-80"
         >
           <source src={video1Src} type="video/mp4" />
@@ -48,20 +81,24 @@ export default function Hero({ isMenuOpen }: HeroProps) {
       </div>
       <div className="absolute inset-0 hidden md:flex">
         <video 
+          ref={videoRef2}
           autoPlay 
           loop 
           muted 
           playsInline
-          className="h-full w-1/2 object-cover opacity-60"
+          preload="auto"
+          className="h-full w-full object-cover opacity-60"
         >
           <source src={video1Src} type="video/mp4" />
         </video>
         <video 
+          ref={videoRef3}
           autoPlay 
           loop 
           muted 
           playsInline
-          className="h-full w-1/2 object-cover opacity-60"
+          preload="auto"
+          className="hidden lg:hidden h-full w-1/2 object-cover opacity-60"
         >
           <source src={video2Src} type="video/mp4" />
         </video>
@@ -100,10 +137,12 @@ export default function Hero({ isMenuOpen }: HeroProps) {
           <aside className="flex flex-col gap-6">
             <div className="relative w-full h-48 rounded-sm overflow-hidden">
               <video 
+                ref={videoRef1}
                 autoPlay 
                 loop 
                 muted 
                 playsInline
+                preload="auto"
                 controls={false}
                 className="absolute inset-0 w-full h-full object-cover opacity-60 pointer-events-none"
               >
