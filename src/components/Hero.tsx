@@ -128,9 +128,9 @@ export default function Hero({ isMenuOpen }: HeroProps) {
               <button className="rounded-sm border border-amber-500/30 bg-amber-500/10 px-9 py-3.5 text-sm font-medium text-amber-100 transition-all hover:border-amber-500/50 hover:bg-amber-500/20 md:px-11 md:text-base">
                 Start Your Project
               </button>
-              <button className="rounded-sm border border-white/20 px-9 py-3.5 text-sm font-medium text-slate-300 transition-all hover:border-white/40 hover:text-white md:px-11 md:text-base">
+              <a href="tel:+2349162919586" className="rounded-sm border border-white/20 px-9 py-3.5 text-sm font-medium text-slate-300 transition-all hover:border-white/40 hover:text-white md:px-11 md:text-base">
                 Call Now
-              </button>
+              </a>
             </div>
           </div>
 

@@ -1,4 +1,8 @@
-export default function Projects() {
+interface ProjectsProps {
+  showViewAll?: boolean;
+}
+
+export default function Projects({ showViewAll = true }: ProjectsProps) {
   return (
     <section id="projects" className="bg-gradient-to-b from-slate-950/95 to-slate-900/90 py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6">
@@ -11,14 +15,14 @@ export default function Projects() {
             <div className="h-px w-12 bg-gradient-to-l from-amber-500/50 to-transparent" />
           </div>
           <h2 className="mb-6 text-3xl font-light tracking-tight text-white uppercase md:text-5xl">
-            See Our <span className="font-semibold">Projects</span>
+            <span className="font-semibold">Projects</span>
           </h2>
           <p className="mx-auto max-w-2xl text-base leading-relaxed text-slate-400 md:text-xl">
             Explore our portfolio of successful construction projects that with the aesthetic
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
+        <div className="grid gap-6 grid-cols-2 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
           <div className="group cursor-pointer">
             <div className="relative mb-4 overflow-hidden rounded-sm border border-white/10 bg-slate-900">
               <img 
@@ -110,11 +114,13 @@ export default function Projects() {
           </div>
         </div>
 
-        <div className="mt-12 text-center md:mt-16">
-          <button className="rounded-sm border border-amber-500/30 bg-amber-500/10 px-9 py-3.5 text-sm font-medium text-amber-100 transition-all hover:border-amber-500/50 hover:bg-amber-500/20 md:px-11 md:text-base">
-            View All Projects
-          </button>
-        </div>
+        {showViewAll && (
+          <div className="mt-12 text-center md:mt-16">
+            <a href="/projects" className="rounded-sm border border-amber-500/30 bg-amber-500/10 px-9 py-3.5 text-sm font-medium text-amber-100 transition-all hover:border-amber-500/50 hover:bg-amber-500/20 md:px-11 md:text-base inline-block">
+              View All Projects
+            </a>
+          </div>
+        )}
       </div>
     </section>
   );

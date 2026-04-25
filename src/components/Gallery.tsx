@@ -15,7 +15,7 @@ export default function Gallery() {
 
   return (
     <>
-      <section className="bg-gradient-to-b from-slate-900/90 to-slate-950/95 py-20 md:py-28">
+      <section id="services" className="bg-gradient-to-b from-slate-900/90 to-slate-950/95 py-20 md:py-28 scroll-mt-20">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-12 flex items-center justify-center gap-3">
             <div className="h-px w-12 bg-gradient-to-r from-amber-500/50 to-transparent" />

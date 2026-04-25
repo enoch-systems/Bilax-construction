@@ -3,14 +3,21 @@
 import { useEffect, useState } from "react";
 
 export default function PageLoader() {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(false);
-    }, 1500);
-
-    return () => clearTimeout(timer);
+    // Only show loader on actual page refresh (reload type)
+    const navigationEntries = performance.getEntriesByType('navigation');
+    const navigationEntry = navigationEntries[0] as PerformanceNavigationTiming;
+    
+    // Only show if it's a reload (refresh)
+    if (navigationEntry?.type === 'reload') {
+      setIsVisible(true);
+      const timer = setTimeout(() => {
+        setIsVisible(false);
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   return (

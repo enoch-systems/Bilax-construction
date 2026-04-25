@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Header from "@/components/Header";
-import PageLoader from "@/components/PageLoader";
 import Hero from "@/components/Hero";
 import AboutUs from "@/components/AboutUs";
 import Gallery from "@/components/Gallery";
@@ -20,11 +19,17 @@ export default function Home() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setIsLoaded(true);
+    
+    // Handle hash scrolling for services section
+    if (window.location.hash === '#services') {
+      setTimeout(() => {
+        document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
   }, []);
 
   return (
     <main className="bg-slate-950 text-white">
-      <PageLoader />
       <Header onMenuOpenChange={handleMenuChange} />
       <Hero isMenuOpen={isMenuOpen} />
       <section className={`relative transition-all duration-500 ${isMenuOpen ? "backdrop-blur-2xl opacity-20 scale-95" : ""}`}>
