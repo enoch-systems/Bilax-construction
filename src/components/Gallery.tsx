@@ -3,11 +3,11 @@
 import React, { useState } from "react";
 
 const galleryImages = [
-  { src: "/eng1.png", label: "Interior Design" },
-  { src: "/eng2.png", label: "Construction" },
-  { src: "/eng3.png", label: "Architecture" },
-  { src: "/eng4.png", label: "Engineering" },
-  { src: "/eng5.png", label: "Renovation" },
+  { src: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=600&q=80", label: "Interior Design" },
+  { src: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80", label: "Construction" },
+  { src: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=600&q=80", label: "Architecture" },
+  { src: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&q=80", label: "Engineering" },
+  { src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80", label: "Renovation" },
 ];
 
 export default function Gallery() {
