@@ -70,7 +70,7 @@ export default function Hero({ isMenuOpen }: HeroProps) {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_25%_15%,rgba(251,146,60,0.05),transparent_60%),radial-gradient(circle_at_75%_85%,rgba(14,165,233,0.04),transparent_60%)]" />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/50 via-transparent to-transparent" />
 
-      <div className={`relative z-0 mx-auto flex w-full max-w-7xl flex-1 items-center px-6 pb-16 pt-54 md:pt-28 transition-all duration-500 ${isMenuOpen ? "backdrop-blur-2xl opacity-20 scale-95" : ""}`}>
+      <div className={`relative z-0 mx-auto flex w-full max-w-7xl flex-1 items-center px-6 pb-16 pt-54 md:pt-50 transition-all duration-500 ${isMenuOpen ? "backdrop-blur-2xl opacity-20 scale-95" : ""}`}>
         <div className="grid w-full gap-10 lg:grid-cols-[1fr_300px] lg:items-end">
           <div className="max-w-3xl">
             <div className="mb-8 flex items-center gap-3">

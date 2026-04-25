@@ -1,14 +1,19 @@
+import ImageSlideshow from "./ImageSlideshow";
+
 export default function AboutUs() {
   return (
     <section className="bg-gradient-to-b from-slate-950/95 to-slate-900/90 py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="mx-auto max-w-4xl border-l-2 border-white/10 bg-slate-950/40 p-10 backdrop-blur-md md:p-14">
+        <div className="mx-auto max-w-4xl bg-slate-950/40 p-10 backdrop-blur-md md:p-14">
           <div className="mb-8 flex items-center justify-center gap-3">
             <div className="h-px w-12 bg-gradient-to-r from-amber-500/50 to-transparent" />
             <p className="text-xs font-medium uppercase tracking-[0.3em] text-amber-400/90">
               About Us
             </p>
             <div className="h-px w-12 bg-gradient-to-l from-amber-500/50 to-transparent" />
+          </div>
+          <div className="mb-0 md:mb-12">
+            <ImageSlideshow />
           </div>
           <h2 className="mb-8 text-center text-3xl font-light tracking-tight text-white uppercase md:text-5xl">
             Our Reputation is as<br />
