@@ -1,6 +1,9 @@
+"use client";
+
 import ImageSlideshow from "./ImageSlideshow";
 
 export default function AboutUs() {
+
   return (
     <section className="bg-gradient-to-b from-slate-950/95 to-slate-900/90 py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6">

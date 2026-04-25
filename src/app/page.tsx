@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import PageLoader from "@/components/PageLoader";
 import Hero from "@/components/Hero";
 import AboutUs from "@/components/AboutUs";
+import Gallery from "@/components/Gallery";
 import Projects from "@/components/Projects";
 import Footer from "@/components/Footer";
 
@@ -29,6 +30,10 @@ export default function Home() {
       <section className={`relative transition-all duration-500 ${isMenuOpen ? "backdrop-blur-2xl opacity-20 scale-95" : ""}`}>
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
         <AboutUs />
+      </section>
+      <section className={`relative transition-all duration-500 ${isMenuOpen ? "backdrop-blur-2xl opacity-20 scale-95" : ""}`}>
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+        <Gallery />
       </section>
       <section className={`relative transition-all duration-500 ${isMenuOpen ? "backdrop-blur-2xl opacity-20 scale-95" : ""}`}>
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
