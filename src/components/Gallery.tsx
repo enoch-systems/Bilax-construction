@@ -3,11 +3,11 @@
 import React, { useState } from "react";
 
 const galleryImages = [
-  { src: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=600&q=80", label: "Interior Design" },
-  { src: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80", label: "Construction" },
-  { src: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=600&q=80", label: "Architecture" },
-  { src: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&q=80", label: "Engineering" },
-  { src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80", label: "Renovation" },
+  { src: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80", label: "Building Construction" },
+  { src: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&q=80", label: "Civil Engineering" },
+  { src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80", label: "Renovation & Finishing" },
+  { src: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80", label: "Project Management" },
+  { src: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&q=80", label: "Maintenance" },
 ];
 
 export default function Gallery() {

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import { Phone } from "lucide-react";
 
 function getCloudinaryVideoUrl(publicId?: string) {
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
@@ -10,9 +11,10 @@ function getCloudinaryVideoUrl(publicId?: string) {
 
 interface HeroProps {
   isMenuOpen: boolean;
+  onOpenForm?: () => void;
 }
 
-export default function Hero({ isMenuOpen }: HeroProps) {
+export default function Hero({ isMenuOpen, onOpenForm }: HeroProps) {
   const video1Src = getCloudinaryVideoUrl(process.env.NEXT_PUBLIC_CLOUDINARY_HERO_VIDEO_1) ?? "/video1.mp4";
   const video2Src = getCloudinaryVideoUrl(process.env.NEXT_PUBLIC_CLOUDINARY_HERO_VIDEO_2) ?? "/video2.mp4";
   const videoRef1 = useRef<HTMLVideoElement>(null);
@@ -125,10 +127,11 @@ export default function Hero({ isMenuOpen }: HeroProps) {
               We transform ideas into enduring structures through meticulous planning, expert delivery, and a commitment to world-class craftsmanship.
             </p>
             <div className="flex flex-wrap gap-5">
-              <button className="rounded-sm border border-amber-500/30 bg-amber-500/10 px-9 py-3.5 text-sm font-medium text-amber-100 transition-all hover:border-amber-500/50 hover:bg-amber-500/20 md:px-11 md:text-base">
+              <button onClick={onOpenForm} className="cursor-pointer rounded-sm border border-amber-500/30 bg-amber-500/10 px-9 py-3.5 text-sm font-medium text-amber-100 transition-all hover:border-amber-500/50 hover:bg-amber-500/20 md:px-11 md:text-base">
                 Start Your Project
               </button>
-              <a href="tel:+2349162919586" className="rounded-sm border border-white/20 px-9 py-3.5 text-sm font-medium text-slate-300 transition-all hover:border-white/40 hover:text-white md:px-11 md:text-base">
+              <a href="tel:+2349162919586" className="cursor-pointer inline-flex items-center gap-2 rounded-sm border border-white/20 px-9 py-3.5 text-sm font-medium text-slate-300 transition-all hover:border-white/40 hover:text-white md:px-11 md:text-base">
+                <Phone className="w-4 h-4" />
                 Call Now
               </a>
             </div>
@@ -153,11 +156,12 @@ export default function Hero({ isMenuOpen }: HeroProps) {
             <div className="border-l-2 border-white/10 bg-slate-950/40 p-6 backdrop-blur-md">
               <p className="mb-4 text-xs font-medium uppercase tracking-[0.3em] text-slate-500">Our Services</p>
               <div className="flex flex-col gap-4">
-                <span className="flex items-center gap-3 text-sm text-slate-300 transition-colors hover:text-white md:text-base"><span className="h-px w-6 bg-white/20" />Interior Design</span>
-                <span className="flex items-center gap-3 text-sm text-slate-300 transition-colors hover:text-white md:text-base"><span className="h-px w-6 bg-white/20" />Construction</span>
-                <span className="flex items-center gap-3 text-sm text-slate-300 transition-colors hover:text-white md:text-base"><span className="h-px w-6 bg-white/20" />Architecture</span>
-                <span className="flex items-center gap-3 text-sm text-slate-300 transition-colors hover:text-white md:text-base"><span className="h-px w-6 bg-white/20" />Engineering</span>
-                <span className="flex items-center gap-3 text-sm text-slate-300 transition-colors hover:text-white md:text-base"><span className="h-px w-6 bg-white/20" />Renovation</span>
+                <span className="flex items-center gap-3 text-sm text-slate-300 transition-colors hover:text-white md:text-base"><span className="h-px w-6 bg-white/20" />Building Construction</span>
+                <span className="flex items-center gap-3 text-sm text-slate-300 transition-colors hover:text-white md:text-base"><span className="h-px w-6 bg-white/20" />Civil Engineering</span>
+                <span className="flex items-center gap-3 text-sm text-slate-300 transition-colors hover:text-white md:text-base"><span className="h-px w-6 bg-white/20" />Renovation & Finishing</span>
+                <span className="flex items-center gap-3 text-sm text-slate-300 transition-colors hover:text-white md:text-base"><span className="h-px w-6 bg-white/20" />Project Management</span>
+                <span className="flex items-center gap-3 text-sm text-slate-300 transition-colors hover:text-white md:text-base"><span className="h-px w-6 bg-white/20" />Maintenance</span>
+                <span className="flex items-center gap-3 text-sm text-slate-300 transition-colors hover:text-white md:text-base"><span className="h-px w-6 bg-white/20" />Interior Decoration</span>
               </div>
             </div>
           </aside>
