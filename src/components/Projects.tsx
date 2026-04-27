@@ -132,7 +132,7 @@ export default function Projects({ showViewAll = true, showPagination = true }: 
             const restOfTitle = rest.join(' ');
             return (
               <div key={index} className="group">
-                <div className="relative mb-4 mx-auto w-11/12 overflow-hidden rounded-sm border border-white/10 bg-slate-900 cursor-pointer" onClick={() => setSelectedVideo(`https://www.youtube.com/embed/${project.videoId}`)}>
+                <div className="relative mb-4 mx-auto w-11/12 overflow-hidden rounded-sm border border-white/10 bg-slate-900 cursor-pointer" onClick={() => setSelectedVideo(`https://www.youtube.com/embed/${project.videoId}?autoplay=1&rel=0`)}>
                   <img
                     src={`https://img.youtube.com/vi/${project.videoId}/hqdefault.jpg`}
                     alt={project.title}
@@ -146,8 +146,8 @@ export default function Projects({ showViewAll = true, showPagination = true }: 
                     </div>
                   </div>
                 </div>
-                <h3 className="mb-0 pl-4 text-base font-light tracking-tight text-white uppercase md:text-lg cursor-pointer hover:text-amber-400 transition-colors" onClick={() => setSelectedVideo(`https://www.youtube.com/embed/${project.videoId}`)}>{city} <span className="font-semibold">{restOfTitle}</span></h3>
-                <div className="mb-8 mx-auto w-full rounded-b-sm border-2 border-amber-300 border-t-0 p-4 cursor-pointer" style={{ borderLeft: '0.5px solid #373f51', borderRight: '0.5px solid #373f51', borderBottom: '0.5px solid #373f51', borderTop: 'none' }} onClick={() => setSelectedVideo(`https://www.youtube.com/embed/${project.videoId}`)}>
+                <h3 className="mb-0 pl-4 text-base font-light tracking-tight text-white uppercase md:text-lg cursor-pointer hover:text-amber-400 transition-colors" onClick={() => setSelectedVideo(`https://www.youtube.com/embed/${project.videoId}?autoplay=1&rel=0`)}>{city} <span className="font-semibold">{restOfTitle}</span></h3>
+                <div className="mb-8 mx-auto w-full rounded-b-sm border-2 border-amber-300 border-t-0 p-4 cursor-pointer" style={{ borderLeft: '0.5px solid #373f51', borderRight: '0.5px solid #373f51', borderBottom: '0.5px solid #373f51', borderTop: 'none' }} onClick={() => setSelectedVideo(`https://www.youtube.com/embed/${project.videoId}?autoplay=1&rel=0`)}>
                   <p className="text-xs text-slate-400 md:text-sm">{project.description}</p>
                 </div>
               </div>

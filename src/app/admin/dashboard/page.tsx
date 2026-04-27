@@ -226,8 +226,6 @@ function GalleryUploadForm() {
         const fetchResponse = await fetch('/api/gallery');
         const data = await fetchResponse.json();
         setGalleryImages(data);
-        // Open gallery in new tab to view the upload
-        window.open("/gallery", "_blank");
       } else {
         setMessage(data.error || "Upload failed");
       }
@@ -727,24 +725,10 @@ function ProjectUploadForm() {
       return;
     }
 
-    // Validate YouTube video ID format (11 characters)
-    if (videoId.length !== 11) {
-      setErrors(prev => ({ ...prev, videoId: "Invalid YouTube video ID (must be 11 characters)" }));
-      return;
-    }
-
     setIsUploading(true);
     setMessage("");
 
     try {
-      // Check if video exists by testing thumbnail
-      const thumbnailResponse = await fetch(`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`);
-      if (!thumbnailResponse.ok) {
-        setErrors(prev => ({ ...prev, videoId: "Video not found or is private/unlisted" }));
-        setIsUploading(false);
-        return;
-      }
-
       const response = await fetch("/api/admin/projects", {
         method: "POST",
         headers: {
@@ -760,7 +744,8 @@ function ProjectUploadForm() {
         setTitle("");
         setDescription("");
         setVideoId("");
-        // Refresh projects
+        setShowAddModal(false);
+        // Refresh projects list
         const fetchResponse = await fetch('/api/projects');
         const data = await fetchResponse.json();
         setProjects(data);
