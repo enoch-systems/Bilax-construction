@@ -40,8 +40,7 @@ export default function AboutUs({ showButton = true, showFullText = false }: Abo
            
             <div className="-mx-16 px-9 md:-mx-14 md:px-14">
               <p className="mb-12 text-left text-base leading-relaxed text-slate-400 md:text-xl">
-                Founded with a vision to transform Nigeria's construction landscape, Bilax Constructions has grown from a small family business into a leading construction company over 14+ years. Our journey began with a simple belief: every structure we build should stand as a testament to quality, integrity, and innovation.
-                {showFullText && " Over the years, we have completed numerous projects across residential, commercial, and industrial sectors, earning the trust of clients through consistent delivery and exceptional craftsmanship. Today, we continue to push boundaries, embracing modern techniques while honoring the timeless principles of construction excellence."}
+                Founded with a vision to transform Nigeria's construction landscape, Bilax Constructions has grown from a small family business into a leading construction company over 14+ years. Our journey began with a simple belief: every structure we build should stand as a testament to quality, integrity, and innovation. Over the years, we have completed numerous projects across residential, commercial, and industrial sectors, earning the trust of clients through consistent delivery and exceptional craftsmanship. Today, we continue to push boundaries, embracing modern techniques while honoring the timeless principles of construction excellence.
               </p>
             </div>
             {showButton && (
