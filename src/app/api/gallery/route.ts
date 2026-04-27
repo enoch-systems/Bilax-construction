@@ -15,7 +15,7 @@ export async function GET() {
     if (error) {
       console.error("Error fetching gallery data:", error);
       return NextResponse.json(
-        { error: "Failed to fetch gallery data" },
+        { error: "Failed to fetch gallery data", details: error.message },
         { status: 500 }
       );
     }
@@ -31,7 +31,7 @@ export async function GET() {
   } catch (error) {
     console.error("Error fetching gallery data:", error);
     return NextResponse.json(
-      { error: "Failed to fetch gallery data" },
+      { error: "Failed to fetch gallery data", details: String(error) },
       { status: 500 }
     );
   }
