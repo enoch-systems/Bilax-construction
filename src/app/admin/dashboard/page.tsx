@@ -680,10 +680,30 @@ function ProjectUploadForm() {
     setShowDeleteWarning(true);
   };
 
-  const confirmDelete = () => {
-    // Delete project logic
-    setShowDeleteWarning(false);
-    setShowEditModal(false);
+  const confirmDelete = async () => {
+    if (!editingProject) return;
+
+    try {
+      const response = await fetch("/api/admin/projects", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ videoId: editingProject.videoId }),
+      });
+
+      if (response.ok) {
+        // Refresh projects
+        const fetchResponse = await fetch('/api/projects');
+        const data = await fetchResponse.json();
+        setProjects(data);
+      }
+    } catch (error) {
+      console.error("Delete failed:", error);
+    } finally {
+      setShowDeleteWarning(false);
+      setShowEditModal(false);
+    }
   };
 
   const handleEditProject = (project: any) => {
@@ -1031,10 +1051,9 @@ function ProjectEditModal({ project, isOpen, onClose, onDelete }: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ 
-          originalTitle: project.title,
+          videoId: project.videoId,
           title,
           description,
-          videoId
         }),
       });
 
