@@ -615,6 +615,35 @@ function ProjectUploadForm() {
   const [showAddModal, setShowAddModal] = useState(false);
   const [errors, setErrors] = useState({ title: "", description: "", videoId: "" });
 
+  // Function to extract YouTube video ID from various URL formats
+  const extractYouTubeId = (input: string): string => {
+    if (!input) return "";
+    
+    // If it's already just an ID (no special characters), return as is
+    if (/^[a-zA-Z0-9_-]{11}$/.test(input)) {
+      return input;
+    }
+    
+    // Try to extract ID from various URL formats
+    const patterns = [
+      /(?:youtube\.com\/shorts\/([a-zA-Z0-9_-]{11}))/,
+      /(?:youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11}))/,
+      /(?:youtube\.com\/embed\/([a-zA-Z0-9_-]{11}))/,
+      /(?:youtu\.be\/([a-zA-Z0-9_-]{11}))/,
+      /(?:youtube\.com\/v\/([a-zA-Z0-9_-]{11}))/,
+    ];
+    
+    for (const pattern of patterns) {
+      const match = input.match(pattern);
+      if (match && match[1]) {
+        return match[1];
+      }
+    }
+    
+    // If no match, return the original input
+    return input;
+  };
+
   useEffect(() => {
     const fetchProjects = async () => {
       try {
@@ -995,21 +1024,22 @@ function ProjectUploadForm() {
 
               <div>
                 <label htmlFor="videoId" className="block text-sm font-medium text-slate-300 mb-2">
-                  YouTube Video ID
+                  YouTube Video URL or ID
                 </label>
                 <input
                   type="text"
                   id="videoId"
                   value={videoId}
                   onChange={(e) => {
-                    setVideoId(e.target.value);
+                    const extractedId = extractYouTubeId(e.target.value);
+                    setVideoId(extractedId);
                     setErrors(prev => ({ ...prev, videoId: "" }));
                   }}
                   className={`w-full rounded-sm border px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-1 resize-none ${errors.videoId ? "border-red-500/50 bg-red-500/10 focus:border-red-500/50 focus:ring-red-500/50" : "border-slate-700 bg-slate-800/50 focus:border-amber-500/50 focus:ring-amber-500/50"}`}
-                  placeholder="h6ngCDclhHQ"
+                  placeholder="https://www.youtube.com/shorts/cXu5UOszOyU or cXu5UOszOyU"
                 />
                 <p className="mt-2 text-xs text-slate-500">
-                  Extract the video ID from YouTube URL (e.g., from youtube.com/watch?v=VIDEO_ID)
+                  Paste any YouTube URL (shorts, watch, embed, youtu.be) and the ID will be auto-extracted
                 </p>
                 {errors.videoId && <p className="mt-1 text-xs text-red-400">{errors.videoId}</p>}
               </div>
@@ -1040,6 +1070,35 @@ function ProjectEditModal({ project, isOpen, onClose, onDelete }: {
   const [description, setDescription] = useState(project.description);
   const [videoId, setVideoId] = useState(project.videoId);
   const [isUploading, setIsUploading] = useState(false);
+
+  // Function to extract YouTube video ID from various URL formats
+  const extractYouTubeId = (input: string): string => {
+    if (!input) return "";
+    
+    // If it's already just an ID (no special characters), return as is
+    if (/^[a-zA-Z0-9_-]{11}$/.test(input)) {
+      return input;
+    }
+    
+    // Try to extract ID from various URL formats
+    const patterns = [
+      /(?:youtube\.com\/shorts\/([a-zA-Z0-9_-]{11}))/,
+      /(?:youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11}))/,
+      /(?:youtube\.com\/embed\/([a-zA-Z0-9_-]{11}))/,
+      /(?:youtu\.be\/([a-zA-Z0-9_-]{11}))/,
+      /(?:youtube\.com\/v\/([a-zA-Z0-9_-]{11}))/,
+    ];
+    
+    for (const pattern of patterns) {
+      const match = input.match(pattern);
+      if (match && match[1]) {
+        return match[1];
+      }
+    }
+    
+    // If no match, return the original input
+    return input;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -1114,13 +1173,14 @@ function ProjectEditModal({ project, isOpen, onClose, onDelete }: {
 
           <div>
             <label className="block text-sm font-medium text-slate-300 mb-2">
-              Video ID
+              YouTube Video URL or ID
             </label>
             <input
               type="text"
               value={videoId}
-              onChange={(e) => setVideoId(e.target.value)}
+              onChange={(e) => setVideoId(extractYouTubeId(e.target.value))}
               className="w-full rounded-sm border border-slate-700 bg-slate-800/50 px-4 py-3 text-white placeholder-slate-500 focus:border-amber-500/50 focus:outline-none focus:ring-1 focus:ring-amber-500/50"
+              placeholder="https://www.youtube.com/shorts/cXu5UOszOyU or cXu5UOszOyU"
             />
           </div>
 
