@@ -317,7 +317,7 @@ export default function Header({ onMenuOpenChange }: HeaderProps) {
         <div className="md:hidden fixed inset-0 z-[100] bg-slate-950/95 backdrop-blur-2xl">
           <div className="flex h-full flex-col">
             <div className="flex items-center justify-between px-6 py-6 border-b border-white/5">
-              <span className="text-lg font-medium tracking-wide">
+              <span className="text-sm font-medium tracking-wide">
                 <span className="text-amber-400/90">Bilax</span>{" "}
                 <span className="text-slate-200">Constructions</span>
               </span>

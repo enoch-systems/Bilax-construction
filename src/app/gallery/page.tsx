@@ -149,8 +149,8 @@ export default function GalleryPage() {
                     alt={image.title}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300" />
-                  <div className="absolute inset-0 flex items-center justify-center p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-colors duration-300" />
+                  <div className="absolute inset-0 flex items-center justify-center p-4">
                     <p className="text-sm font-medium text-amber-100">Tap to view</p>
                   </div>
                 </div>
