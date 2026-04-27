@@ -3,11 +3,11 @@
 import React, { useState, useEffect } from "react";
 
 const images = [
-  "/eng1.png",
-  "/eng2.png",
-  "/eng3.png",
-  "/eng4.png",
-  "/eng5.png",
+  "https://res.cloudinary.com/djdbcoyot/image/upload/v1777316847/construction/about/eng1.png",
+  "https://res.cloudinary.com/djdbcoyot/image/upload/v1777316850/construction/about/eng2.png",
+  "https://res.cloudinary.com/djdbcoyot/image/upload/v1777316852/construction/about/eng3.png",
+  "https://res.cloudinary.com/djdbcoyot/image/upload/v1777316854/construction/about/eng4.png",
+  "https://res.cloudinary.com/djdbcoyot/image/upload/v1777316856/construction/about/eng5.png",
 ];
 
 export default function ImageSlideshow() {
