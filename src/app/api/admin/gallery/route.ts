@@ -1,7 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
-import { writeFile, mkdir, readFile, unlink } from "fs/promises";
-import { existsSync } from "fs";
-import path from "path";
+import { createClient } from '@supabase/supabase-js';
+import { v2 as cloudinary } from 'cloudinary';
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+const supabase = createClient(supabaseUrl, supabaseServiceKey, {
+  auth: {
+    autoRefreshToken: false,
+    persistSession: false
+  }
+});
+
+// Configure Cloudinary
+cloudinary.config({
+  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export async function POST(request: NextRequest) {
   try {
@@ -17,47 +32,47 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create public/gallery directory if it doesn't exist
-    const galleryDir = path.join(process.cwd(), "public", "gallery");
-    if (!existsSync(galleryDir)) {
-      await mkdir(galleryDir, { recursive: true });
-    }
-
-    // Generate unique filename
-    const timestamp = Date.now();
-    const extension = path.extname(image.name);
-    const filename = `g${timestamp}${extension}`;
-    const filepath = path.join(galleryDir, filename);
-
-    // Convert file to buffer and write to disk
+    // Convert file to buffer
     const bytes = await image.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    await writeFile(filepath, buffer);
 
-    // Update gallery data JSON
-    const dataPath = path.join(process.cwd(), "data", "gallery.json");
-    const dataDir = path.join(process.cwd(), "data");
-    
-    if (!existsSync(dataDir)) {
-      await mkdir(dataDir, { recursive: true });
-    }
-
-    let galleryData: any[] = [];
-    if (existsSync(dataPath)) {
-      const dataFile = await readFile(dataPath, "utf-8");
-      galleryData = JSON.parse(dataFile);
-    }
-
-    galleryData.unshift({
-      src: `/gallery/${filename}`,
-      title,
-      category,
+    // Upload to Cloudinary
+    const cloudinaryResponse = await new Promise<any>((resolve, reject) => {
+      cloudinary.uploader.upload_stream(
+        {
+          folder: 'construction/gallery',
+          public_id: `gallery-${Date.now()}`,
+          transformation: [
+            { quality: 'auto', fetch_format: 'auto' },
+            { width: 1200, height: 1200, crop: 'limit' }
+          ]
+        },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        }
+      ).end(buffer);
     });
 
-    await writeFile(dataPath, JSON.stringify(galleryData, null, 2));
+    // Save to Supabase
+    const { error } = await supabase
+      .from('gallery_images')
+      .insert({
+        src: cloudinaryResponse.secure_url,
+        title,
+        category
+      });
+
+    if (error) {
+      console.error("Supabase error:", error);
+      return NextResponse.json(
+        { error: "Failed to save to database" },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json(
-      { message: "Image uploaded successfully", filename },
+      { message: "Image uploaded successfully", url: cloudinaryResponse.secure_url },
       { status: 200 }
     );
   } catch (error) {
@@ -80,37 +95,29 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    // Update gallery data JSON to remove the image
-    const dataPath = path.join(process.cwd(), "data", "gallery.json");
-    
-    if (!existsSync(dataPath)) {
+    // Delete from Supabase
+    const { error } = await supabase
+      .from('gallery_images')
+      .delete()
+      .eq('src', src);
+
+    if (error) {
+      console.error("Supabase error:", error);
       return NextResponse.json(
-        { error: "Gallery data not found" },
-        { status: 404 }
+        { error: "Failed to delete from database" },
+        { status: 500 }
       );
     }
 
-    const dataFile = await readFile(dataPath, "utf-8");
-    let galleryData: any[] = JSON.parse(dataFile);
-
-    // Remove the image from the array
-    const originalLength = galleryData.length;
-    galleryData = galleryData.filter(item => item.src !== src);
-
-    if (galleryData.length === originalLength) {
-      return NextResponse.json(
-        { error: "Image not found in gallery" },
-        { status: 404 }
-      );
-    }
-
-    // Write updated data back to file
-    await writeFile(dataPath, JSON.stringify(galleryData, null, 2));
-
-    // Try to delete the physical file (optional, will continue if file doesn't exist)
-    const filepath = path.join(process.cwd(), "public", src);
-    if (existsSync(filepath)) {
-      await unlink(filepath);
+    // Delete from Cloudinary (extract public_id from URL)
+    const publicId = src.split('/').pop()?.split('.')[0];
+    if (publicId) {
+      try {
+        await cloudinary.uploader.destroy(`construction/gallery/${publicId}`);
+      } catch (cloudinaryError) {
+        console.error("Cloudinary delete error:", cloudinaryError);
+        // Continue even if Cloudinary delete fails
+      }
     }
 
     return NextResponse.json(
@@ -137,37 +144,19 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    // Update gallery data JSON
-    const dataPath = path.join(process.cwd(), "data", "gallery.json");
-    
-    if (!existsSync(dataPath)) {
+    // Update in Supabase
+    const { error } = await supabase
+      .from('gallery_images')
+      .update({ title, category })
+      .eq('src', src);
+
+    if (error) {
+      console.error("Supabase error:", error);
       return NextResponse.json(
-        { error: "Gallery data not found" },
-        { status: 404 }
+        { error: "Failed to update image" },
+        { status: 500 }
       );
     }
-
-    const dataFile = await readFile(dataPath, "utf-8");
-    let galleryData: any[] = JSON.parse(dataFile);
-
-    // Find and update the image
-    const imageIndex = galleryData.findIndex(item => item.src === src);
-    
-    if (imageIndex === -1) {
-      return NextResponse.json(
-        { error: "Image not found in gallery" },
-        { status: 404 }
-      );
-    }
-
-    galleryData[imageIndex] = {
-      ...galleryData[imageIndex],
-      title,
-      category
-    };
-
-    // Write updated data back to file
-    await writeFile(dataPath, JSON.stringify(galleryData, null, 2));
 
     return NextResponse.json(
       { message: "Image updated successfully" },
