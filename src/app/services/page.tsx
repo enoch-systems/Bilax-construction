@@ -10,32 +10,32 @@ const services = [
   {
     title: "Residential Construction",
     description: "Building dream homes with precision and quality. From luxury villas to affordable housing, we deliver exceptional residential projects that meet your unique needs and exceed expectations.",
-    image: "/services/residential.jfif",
+    image: "https://res.cloudinary.com/djdbcoyot/image/upload/v1777316778/construction/services/residential.jpg",
   },
   {
     title: "Commercial Construction",
     description: "Creating functional and inspiring commercial spaces. Our expertise includes office buildings, retail centers, hotels, and mixed-use developments designed for business success.",
-    image: "/services/commercial.jfif",
+    image: "https://res.cloudinary.com/djdbcoyot/image/upload/v1777316771/construction/services/commercial.jpg",
   },
   {
     title: "Industrial Construction",
     description: "Specialized construction for industrial facilities including factories, warehouses, processing plants, and manufacturing centers built to operational excellence standards.",
-    image: "/services/industrial_building.jfif",
+    image: "https://res.cloudinary.com/djdbcoyot/image/upload/v1777316774/construction/services/industrial_building.jpg",
   },
   {
     title: "Renovation & Remodeling",
     description: "Transforming existing spaces into modern, functional environments. We handle renovations of all scales with minimal disruption to your daily operations.",
-    image: "/services/renovation.jfif",
+    image: "https://res.cloudinary.com/djdbcoyot/image/upload/v1777316777/construction/services/renovation.jpg",
   },
   {
     title: "Project Management",
     description: "Comprehensive project management services ensuring your construction project is delivered on time, within budget, and to the highest quality standards.",
-    image: "/services/projectmanagement.jfif",
+    image: "https://res.cloudinary.com/djdbcoyot/image/upload/v1777316775/construction/services/projectmanagement.jpg",
   },
   {
     title: "Consulting Services",
     description: "Expert construction consulting for feasibility studies, cost estimation, design review, and technical guidance throughout your project lifecycle.",
-    image: "/services/consulting.jfif",
+    image: "https://res.cloudinary.com/djdbcoyot/image/upload/v1777316773/construction/services/consulting.jpg",
   },
 ];
 
