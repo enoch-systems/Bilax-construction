@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 interface FormProps {
   onClose?: () => void;
@@ -49,39 +50,57 @@ export default function Form({ onClose }: FormProps) {
     setIsSubmitting(true);
     setSubmitStatus("idle");
 
-    // Simulate form submission
-    setTimeout(() => {
-      console.log("Form submitted:", formData);
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus("success");
+        
+        // Reset form after successful submission
+        setTimeout(() => {
+          setFormData({
+            name: "",
+            email: "",
+            phone: "",
+            projectType: "",
+            budget: "",
+            message: "",
+          });
+          setSubmitStatus("idle");
+          onClose?.();
+        }, 2000);
+      } else {
+        setSubmitStatus("error");
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setSubmitStatus("error");
+    } finally {
       setIsSubmitting(false);
-      setSubmitStatus("success");
-      
-      // Reset form after successful submission
-      setTimeout(() => {
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          projectType: "",
-          budget: "",
-          message: "",
-        });
-        setSubmitStatus("idle");
-        onClose?.();
-      }, 2000);
-    }, 1500);
+    }
   };
 
   return (
     <div className="relative w-full max-w-2xl mx-auto">
       {onClose && (
-        <button
+        <motion.button
           onClick={onClose}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
           className="cursor-pointer absolute -top-12 right-0 text-slate-400 hover:text-white transition-colors"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
-        </button>
+        </motion.button>
       )}
 
       <div className="mb-8">
@@ -107,7 +126,7 @@ export default function Form({ onClose }: FormProps) {
               value={formData.name}
               onChange={handleChange}
               className="cursor-pointer w-full rounded-sm border border-white/20 bg-slate-900/50 px-4 py-3 text-white placeholder-slate-500 transition-all focus:border-amber-500/50 focus:outline-none focus:ring-1 focus:ring-amber-500/50"
-              placeholder="John Doe"
+              placeholder="Enter your name"
             />
           </div>
 
@@ -123,7 +142,7 @@ export default function Form({ onClose }: FormProps) {
               value={formData.email}
               onChange={handleChange}
               className="cursor-pointer w-full rounded-sm border border-white/20 bg-slate-900/50 px-4 py-3 text-white placeholder-slate-500 transition-all focus:border-amber-500/50 focus:outline-none focus:ring-1 focus:ring-amber-500/50"
-              placeholder="john@example.com"
+              placeholder="Enter your email"
             />
           </div>
         </div>
@@ -140,7 +159,7 @@ export default function Form({ onClose }: FormProps) {
             value={formData.phone}
             onChange={handleChange}
             className="cursor-pointer w-full rounded-sm border border-white/20 bg-slate-900/50 px-4 py-3 text-white placeholder-slate-500 transition-all focus:border-amber-500/50 focus:outline-none focus:ring-1 focus:ring-amber-500/50"
-            placeholder="+234 916 291 9586"
+            placeholder="Enter your phone number"
           />
         </div>
 
@@ -215,13 +234,15 @@ export default function Form({ onClose }: FormProps) {
           </div>
         )}
 
-        <button
+        <motion.button
           type="submit"
           disabled={isSubmitting}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
           className="cursor-pointer w-full rounded-sm border border-amber-500/30 bg-amber-500/10 px-9 py-3.5 text-sm font-medium text-amber-100 transition-all hover:border-amber-500/50 hover:bg-amber-500/20 disabled:opacity-50 disabled:cursor-not-allowed md:text-base"
         >
           {isSubmitting ? "Submitting..." : "Submit Inquiry"}
-        </button>
+        </motion.button>
       </form>
     </div>
   );

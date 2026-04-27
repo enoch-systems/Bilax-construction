@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 import { Phone } from "lucide-react";
+import { motion } from "framer-motion";
 
 function getCloudinaryVideoUrl(publicId?: string) {
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
@@ -51,22 +52,6 @@ export default function Hero({ isMenuOpen, onOpenForm }: HeroProps) {
 
   return (
     <>
-      <style jsx>{`
-        @keyframes fade-in-up {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fade-in-up {
-          animation: fade-in-up 0.6s ease-out forwards;
-          opacity: 0;
-        }
-      `}</style>
       <section className="relative flex min-h-screen flex-col overflow-hidden bg-slate-950">
       <div className="absolute inset-0 flex md:hidden">
         <video 
@@ -120,20 +105,47 @@ export default function Hero({ isMenuOpen, onOpenForm }: HeroProps) {
               <div className="h-px w-12 bg-gradient-to-l from-amber-500/50 to-transparent" />
             </div>
             <h1 className="mb-8 text-5xl font-light tracking-tight text-white uppercase md:text-7xl lg:text-8xl">
-              <span className="inline-block animate-fade-in-up" style={{ animationDelay: '0ms' }}>Building The Spaces</span><br />
-              <span className="inline-block font-semibold animate-fade-in-up" style={{ animationDelay: '200ms' }}>Your Vision Deserves</span>
+              <motion.span 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0, ease: "easeOut" }}
+                className="inline-block"
+              >
+                Building The Spaces
+              </motion.span>
+              <br />
+              <motion.span 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
+                className="inline-block font-semibold"
+              >
+                Your Vision Deserves
+              </motion.span>
             </h1>
             <p className="mb-12 max-w-xl text-base leading-relaxed text-slate-400 md:text-lg">
               We transform ideas into enduring structures through meticulous planning, expert delivery, and a commitment to world-class craftsmanship.
             </p>
             <div className="flex flex-wrap gap-5">
-              <button onClick={onOpenForm} className="cursor-pointer rounded-sm border border-amber-500/30 bg-amber-500/10 px-9 py-3.5 text-sm font-medium text-amber-100 transition-all hover:border-amber-500/50 hover:bg-amber-500/20 md:px-11 md:text-base">
+              <motion.button 
+                onClick={onOpenForm}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.15 }}
+                className="cursor-pointer rounded-sm border border-amber-500/30 bg-amber-500/10 px-9 py-3.5 text-sm font-medium text-amber-100 transition-all hover:border-amber-500/50 hover:bg-amber-500/20 md:px-11 md:text-base"
+              >
                 Start Your Project
-              </button>
-              <a href="tel:+2349162919586" className="cursor-pointer inline-flex items-center gap-2 rounded-sm border border-white/20 px-9 py-3.5 text-sm font-medium text-slate-300 transition-all hover:border-white/40 hover:text-white md:px-11 md:text-base">
+              </motion.button>
+              <motion.a 
+                href="tel:+2349162919586"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.15 }}
+                className="cursor-pointer inline-flex items-center gap-2 rounded-sm border border-white/20 px-9 py-3.5 text-sm font-medium text-slate-300 transition-all hover:border-white/40 hover:text-white md:px-11 md:text-base"
+              >
                 <Phone className="w-4 h-4" />
                 Call Now
-              </a>
+              </motion.a>
             </div>
           </div>
 
@@ -156,12 +168,12 @@ export default function Hero({ isMenuOpen, onOpenForm }: HeroProps) {
             <div className="border-l-2 border-white/10 bg-slate-950/40 p-6 backdrop-blur-md">
               <p className="mb-4 text-xs font-medium uppercase tracking-[0.3em] text-slate-500">Our Services</p>
               <div className="flex flex-col gap-4">
-                <span className="flex items-center gap-3 text-sm text-slate-300 transition-colors hover:text-white md:text-base"><span className="h-px w-6 bg-white/20" />Building Construction</span>
-                <span className="flex items-center gap-3 text-sm text-slate-300 transition-colors hover:text-white md:text-base"><span className="h-px w-6 bg-white/20" />Civil Engineering</span>
-                <span className="flex items-center gap-3 text-sm text-slate-300 transition-colors hover:text-white md:text-base"><span className="h-px w-6 bg-white/20" />Renovation & Finishing</span>
+                <span className="flex items-center gap-3 text-sm text-slate-300 transition-colors hover:text-white md:text-base"><span className="h-px w-6 bg-white/20" />Residential Construction</span>
+                <span className="flex items-center gap-3 text-sm text-slate-300 transition-colors hover:text-white md:text-base"><span className="h-px w-6 bg-white/20" />Commercial Construction</span>
+                <span className="flex items-center gap-3 text-sm text-slate-300 transition-colors hover:text-white md:text-base"><span className="h-px w-6 bg-white/20" />Industrial Construction</span>
+                <span className="flex items-center gap-3 text-sm text-slate-300 transition-colors hover:text-white md:text-base"><span className="h-px w-6 bg-white/20" />Renovation & Remodeling</span>
                 <span className="flex items-center gap-3 text-sm text-slate-300 transition-colors hover:text-white md:text-base"><span className="h-px w-6 bg-white/20" />Project Management</span>
-                <span className="flex items-center gap-3 text-sm text-slate-300 transition-colors hover:text-white md:text-base"><span className="h-px w-6 bg-white/20" />Maintenance</span>
-                <span className="flex items-center gap-3 text-sm text-slate-300 transition-colors hover:text-white md:text-base"><span className="h-px w-6 bg-white/20" />Interior Decoration</span>
+                <span className="flex items-center gap-3 text-sm text-slate-300 transition-colors hover:text-white md:text-base"><span className="h-px w-6 bg-white/20" />Consulting Services</span>
               </div>
             </div>
           </aside>

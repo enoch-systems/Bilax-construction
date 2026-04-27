@@ -1,4 +1,15 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+
 export default function Footer() {
+  const pathname = usePathname();
+  const isAdminPage = pathname.startsWith("/admin");
+
+  if (isAdminPage) {
+    return null;
+  }
+
   return (
     <footer className="border-t border-white/10 bg-gradient-to-b from-slate-950/95 to-slate-900/90 pt-16 md:pt-20 pb-10">
       <div className="mx-auto max-w-7xl px-6">
@@ -31,19 +42,27 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-5 text-lg font-light tracking-tight text-white uppercase"><span className="font-semibold">Contact</span></h4>
+            <h4 className="mb-5 text-3xl font-light tracking-tight text-white uppercase md:text-4xl"><span className="font-semibold">Contact</span></h4>
             <ul className="space-y-4">
               <li className="text-slate-400">
                 <span className="block text-slate-200 font-medium text-sm">Email</span>
-                <a href="mailto:info@conzone.com" className="transition-colors hover:text-amber-400/90">info@conzone.com</a>
+                <a href="mailto:info@bilaxconstructions.com" className="transition-colors hover:text-amber-400/90">info@bilaxconstructions.com</a>
               </li>
               <li className="text-slate-400">
-                <span className="block text-slate-200 font-medium text-sm">Phone</span>
-                <a href="tel:+2349162919586" className="transition-colors hover:text-amber-400/90">+2349162919586</a>
+                <span className="block text-slate-200 font-medium text-sm">Lagos Office</span>
+                <a href="tel:+2348123456789" className="transition-colors hover:text-amber-400/90">+2348123456789</a>
               </li>
               <li className="text-slate-400">
-                <span className="block text-slate-200 font-medium text-sm">Address</span>
-                Plot 166 tenant road, Aba,<br />
+                <span className="block text-slate-200 font-medium text-sm">Port Harcourt Office</span>
+                <a href="tel:+2348098765432" className="transition-colors hover:text-amber-400/90">+2348098765432</a>
+              </li>
+              <li className="text-slate-400">
+                <span className="block text-slate-200 font-medium text-sm">Enugu Office</span>
+                <a href="tel:+2348134567890" className="transition-colors hover:text-amber-400/90">+2348134567890</a>
+              </li>
+              <li className="text-slate-400">
+                <span className="block text-slate-200 font-medium text-sm">Head Office</span>
+                Plot 166 Tenant Road, Aba,<br />
                 Abia State, Nigeria
               </li>
             </ul>

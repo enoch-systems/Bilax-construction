@@ -1,31 +1,61 @@
 "use client";
 
-import { useState } from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import { useState, useEffect, Suspense } from "react";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import dynamic from "next/dynamic";
+import ImageSkeleton from "@/components/ImageSkeleton";
 
-const galleryImages = [
-  { src: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80", title: "Building Construction", category: "Construction" },
-  { src: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80", title: "Civil Engineering", category: "Engineering" },
-  { src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80", title: "Renovation Project", category: "Renovation" },
-  { src: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80", title: "Project Management", category: "Management" },
-  { src: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80", title: "Maintenance Work", category: "Maintenance" },
-  { src: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80", title: "Interior Design", category: "Interior" },
-  { src: "https://images.unsplash.com/photo-1576523939626-419037e4819c?w=800&q=80", title: "Commercial Tower", category: "Commercial" },
-  { src: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80", title: "Modern Complex", category: "Commercial" },
-  { src: "https://images.unsplash.com/photo-1541976590-713941681591?w=800&q=80", title: "Residential Estate", category: "Residential" },
-  { src: "https://images.unsplash.com/photo-1590644365608-8b2d5f2947b2?w=800&q=80", title: "Estate Development", category: "Residential" },
-  { src: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&q=80", title: "Medical Center", category: "Institutional" },
-  { src: "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80", title: "University Campus", category: "Institutional" },
-];
+const Header = dynamic(() => import("@/components/Header"), { ssr: true });
+const Footer = dynamic(() => import("@/components/Footer"), { ssr: true });
+
+interface GalleryImage {
+  src: string;
+  title: string;
+  category: string;
+}
 
 export default function GalleryPage() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [filter, setFilter] = useState("All");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [imagesPerPage, setImagesPerPage] = useState(12);
+  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const categories = ["All", "Construction", "Engineering", "Renovation", "Management", "Maintenance", "Interior", "Commercial", "Residential", "Institutional"];
+  useEffect(() => {
+    const handleResize = () => {
+      setImagesPerPage(window.innerWidth >= 768 ? 16 : 8);
+    };
 
-  const filteredImages = filter === "All" ? galleryImages : galleryImages.filter(img => img.category === filter);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    const fetchGalleryData = async () => {
+      try {
+        const response = await fetch('/api/gallery');
+        const data = await response.json();
+        setGalleryImages(data);
+      } catch (error) {
+        console.error('Error fetching gallery data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+  
+    fetchGalleryData();
+  }, []);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentPage]);
+
+  const totalPages = galleryImages.length > 0 ? Math.ceil(galleryImages.length / imagesPerPage) : 0;
+  const indexOfLastImage = currentPage * imagesPerPage;
+  const indexOfFirstImage = indexOfLastImage - imagesPerPage;
+  const currentImages = galleryImages.slice(indexOfFirstImage, indexOfLastImage);
 
   return (
     <main className="bg-slate-950 text-white">
@@ -50,34 +80,77 @@ export default function GalleryPage() {
 
       <section className="bg-gradient-to-b from-slate-900/90 to-slate-950/95 py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="mb-12 flex flex-wrap items-center justify-center gap-3">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setFilter(category)}
-                className={`cursor-pointer rounded-sm border px-4 py-2 text-sm font-medium transition-all md:text-base ${
-                  filter === category
-                    ? "border-amber-500/50 bg-amber-500/20 text-amber-100"
-                    : "border-white/20 bg-white/5 text-slate-300 hover:border-white/40 hover:text-white"
-                }`}
+          {isLoading ? (
+            <div className="grid gap-6 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <ImageSkeleton key={i} />
+              ))}
+            </div>
+          ) : galleryImages.length === 0 ? (
+            <div className="text-center py-20">
+              <p className="text-slate-400">No images in gallery yet.</p>
+            </div>
+          ) : (
+            <>
+              {totalPages > 1 && (
+            <div className="mb-8 flex items-center justify-center gap-1 md:gap-2">
+              <motion.button
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1 ? true : false}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.15 }}
+                className="cursor-pointer px-3 py-2.5 md:px-4 md:py-3 rounded-sm border border-slate-700 bg-slate-800/50 text-slate-300 hover:bg-slate-700/50 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all text-xs md:text-sm"
               >
-                {category}
-              </button>
-            ))}
-          </div>
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </motion.button>
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                <motion.button
+                  key={page}
+                  onClick={() => setCurrentPage(page)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ duration: 0.15 }}
+                  className={`cursor-pointer px-3 py-2.5 md:px-4 md:py-3 rounded-sm border text-xs md:text-sm transition-all ${
+                    currentPage === page
+                      ? 'border-amber-500/50 bg-amber-500/20 text-amber-400'
+                      : 'border-slate-700 bg-slate-800/50 text-slate-300 hover:bg-slate-700/50 hover:text-white'
+                  }`}
+                >
+                  {page}
+                </motion.button>
+              ))}
+              <motion.button
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages ? true : false}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.15 }}
+                className="cursor-pointer px-3 py-2.5 md:px-4 md:py-3 rounded-sm border border-slate-700 bg-slate-800/50 text-slate-300 hover:bg-slate-700/50 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all text-xs md:text-sm"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </motion.button>
+            </div>
+          )}
 
           <div className="grid gap-6 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {filteredImages.map((image, index) => (
+            {currentImages.map((image, index) => (
               <div
                 key={index}
                 className="group cursor-pointer overflow-hidden rounded-sm border border-white/10 bg-slate-950/40 backdrop-blur-sm"
                 onClick={() => setSelectedImage(image.src)}
               >
                 <div className="relative aspect-square overflow-hidden">
-                  <img
+                  <Image
                     src={image.src}
                     alt={image.title}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    fill
+                    sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-slate-950/60" />
                   <div className="absolute inset-0 flex items-center justify-center p-4">
@@ -87,6 +160,53 @@ export default function GalleryPage() {
               </div>
             ))}
           </div>
+
+          {totalPages > 1 && (
+            <div className="mt-12 flex items-center justify-center gap-1 md:gap-2">
+              <motion.button
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1 ? true : false}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.15 }}
+                className="cursor-pointer px-3 py-2.5 md:px-4 md:py-3 rounded-sm border border-slate-700 bg-slate-800/50 text-slate-300 hover:bg-slate-700/50 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all text-xs md:text-sm"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </motion.button>
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                <motion.button
+                  key={page}
+                  onClick={() => setCurrentPage(page)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ duration: 0.15 }}
+                  className={`cursor-pointer px-3 py-2.5 md:px-4 md:py-3 rounded-sm border text-xs md:text-sm transition-all ${
+                    currentPage === page
+                      ? 'border-amber-500/50 bg-amber-500/20 text-amber-400'
+                      : 'border-slate-700 bg-slate-800/50 text-slate-300 hover:bg-slate-700/50 hover:text-white'
+                  }`}
+                >
+                  {page}
+                </motion.button>
+              ))}
+              <motion.button
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages ? true : false}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.15 }}
+                className="cursor-pointer px-3 py-2.5 md:px-4 md:py-3 rounded-sm border border-slate-700 bg-slate-800/50 text-slate-300 hover:bg-slate-700/50 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all text-xs md:text-sm"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </motion.button>
+            </div>
+          )}
+            </>
+          )}
         </div>
       </section>
 
@@ -95,11 +215,15 @@ export default function GalleryPage() {
           className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/90 backdrop-blur-sm"
           onClick={() => setSelectedImage(null)}
         >
-          <img
-            src={selectedImage}
-            alt="Selected"
-            className="max-w-[90vw] max-h-[90vh] object-contain"
-          />
+          <div className="relative max-w-[90vw] max-h-[90vh]">
+            <Image
+              src={selectedImage}
+              alt="Selected"
+              fill
+              className="object-contain"
+              sizes="90vw"
+            />
+          </div>
         </div>
       )}
 

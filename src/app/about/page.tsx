@@ -1,33 +1,38 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
 import AboutUs from "@/components/AboutUs";
 
 const storyBlocks = [
   {
     image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80",
     title: "Our Beginning",
-    text: "Bilax Constructions was founded with a simple yet powerful vision: to transform Nigeria's construction landscape through quality, integrity, and innovation. What started as a small family business has grown into a trusted name in the industry, built on the foundation of delivering exceptional results for every client.",
+    text: "Founded in 2010, Bilax Constructions was established with a simple yet powerful vision: to transform Nigeria's construction landscape through quality, integrity, and innovation. What started as a small family business has grown into a trusted industry leader over 14+ years, built on the foundation of delivering exceptional results for every client. Our journey from humble beginnings to becoming a preferred construction partner speaks to our unwavering commitment to excellence.",
   },
   {
     image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80",
     title: "Growth & Expansion",
-    text: "Over the years, we have expanded our capabilities and expertise, taking on increasingly complex projects across residential, commercial, and industrial sectors. Our growth has been driven by our commitment to excellence and the trust we've earned from clients who return to us time and again for their construction needs.",
+    text: "Over the past 14+ years, we have expanded our capabilities and expertise, taking on increasingly complex projects across residential, commercial, and industrial sectors. With 500+ satisfied clients and 150+ completed projects, our growth has been driven by our commitment to excellence and the trust we've earned from clients who return to us time and again. From small renovations to large-scale developments, our expertise spans the full spectrum of construction services.",
   },
   {
     image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80",
     title: "Our Philosophy",
-    text: "At Bilax Constructions, we believe that every structure we build should stand as a testament to quality craftsmanship. We combine traditional building methods with modern techniques to create spaces that are not only functional but also inspiring. Our team of skilled professionals brings passion and precision to every project.",
+    text: "At Bilax Constructions, we believe that every structure we build should stand as a testament to quality craftsmanship. With COREN registration, ISO certifications, and membership in prestigious industry bodies like NIA and NIOB, we combine traditional building methods with modern techniques to create spaces that are not only functional but also inspiring. Our team of skilled professionals brings passion and precision to every project, ensuring results that exceed expectations.",
   },
   {
     image: "https://images.unsplash.com/photo-1576523939626-419037e4819c?w=800&q=80",
     title: "Looking Forward",
-    text: "As we continue to grow, our commitment to excellence remains unwavering. We are constantly exploring new technologies and sustainable practices to deliver better results for our clients. The future of construction is exciting, and Bilax Constructions is proud to be at the forefront of building Nigeria's tomorrow.",
+    text: "As we continue to grow, our commitment to excellence remains unwavering. We are constantly exploring new technologies and sustainable practices to deliver better results for our clients. With a 98% client satisfaction rate and a proven track record of success, the future of construction is exciting, and Bilax Constructions is proud to be at the forefront of building Nigeria's tomorrow. We invite you to be part of our continued journey of excellence.",
   },
 ];
 
 export default function AboutPage() {
+  const pathname = usePathname();
+  const isAdminPage = pathname.startsWith("/admin");
+
   return (
     <main className="bg-slate-950 text-white">
       <Header />
@@ -67,6 +72,7 @@ export default function AboutPage() {
       </section>
       
       <Footer />
+      <WhatsAppButton />
     </main>
   );
 }

@@ -1,0 +1,26 @@
+[
+  {
+    "originalFile": "commercial.jfif",
+    "cloudinaryUrl": "https://res.cloudinary.com/djdbcoyot/image/upload/v1777316771/construction/services/commercial.jpg"
+  },
+  {
+    "originalFile": "consulting.jfif",
+    "cloudinaryUrl": "https://res.cloudinary.com/djdbcoyot/image/upload/v1777316773/construction/services/consulting.jpg"
+  },
+  {
+    "originalFile": "industrial_building.jfif",
+    "cloudinaryUrl": "https://res.cloudinary.com/djdbcoyot/image/upload/v1777316774/construction/services/industrial_building.jpg"
+  },
+  {
+    "originalFile": "projectmanagement.jfif",
+    "cloudinaryUrl": "https://res.cloudinary.com/djdbcoyot/image/upload/v1777316775/construction/services/projectmanagement.jpg"
+  },
+  {
+    "originalFile": "renovation.jfif",
+    "cloudinaryUrl": "https://res.cloudinary.com/djdbcoyot/image/upload/v1777316777/construction/services/renovation.jpg"
+  },
+  {
+    "originalFile": "residential.jfif",
+    "cloudinaryUrl": "https://res.cloudinary.com/djdbcoyot/image/upload/v1777316778/construction/services/residential.jpg"
+  }
+]
