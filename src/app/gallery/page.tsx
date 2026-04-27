@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import dynamic from "next/dynamic";
 import ImageSkeleton from "@/components/ImageSkeleton";
 
@@ -145,15 +144,13 @@ export default function GalleryPage() {
                 onClick={() => setSelectedImage(image.src)}
               >
                 <div className="relative aspect-square overflow-hidden">
-                  <Image
+                  <img
                     src={image.src}
                     alt={image.title}
-                    fill
-                    sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-slate-950/60" />
-                  <div className="absolute inset-0 flex items-center justify-center p-4">
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300" />
+                  <div className="absolute inset-0 flex items-center justify-center p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <p className="text-sm font-medium text-amber-100">Tap to view</p>
                   </div>
                 </div>
@@ -212,16 +209,14 @@ export default function GalleryPage() {
 
       {selectedImage && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/90 backdrop-blur-sm"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/90 backdrop-blur-sm p-4"
           onClick={() => setSelectedImage(null)}
         >
-          <div className="relative max-w-[90vw] max-h-[90vh]">
-            <Image
+          <div className="relative w-full max-w-5xl max-h-[90vh]">
+            <img
               src={selectedImage}
               alt="Selected"
-              fill
-              className="object-contain"
-              sizes="90vw"
+              className="w-full h-full object-contain max-h-[90vh]"
             />
           </div>
         </div>
