@@ -15,7 +15,7 @@ async function uploadHeroVideo() {
     console.log('Starting hero video upload to Cloudinary...');
     
     // Path to the local hero video
-    const videoPath = path.join(__dirname, '../public/herovideo.mp4');
+    const videoPath = path.join(__dirname, '../public/myherovid.mp4');
     
     // Check if file exists
     if (!fs.existsSync(videoPath)) {
@@ -27,7 +27,7 @@ async function uploadHeroVideo() {
     // Upload to Cloudinary with optimizations
     const result = await cloudinary.uploader.upload(videoPath, {
       resource_type: 'video',
-      public_id: 'hero-videos/hero-video-optimized',
+      public_id: 'hero-videos/myherovid',
       folder: 'hero-videos',
       overwrite: true,
       // Apply some basic optimizations during upload

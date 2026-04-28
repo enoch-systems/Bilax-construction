@@ -11,8 +11,8 @@ interface HeroProps {
 }
 
 export default function Hero({ isMenuOpen, onOpenForm }: HeroProps) {
-  // Cloudinary video URL - uploaded optimized hero video
-  const video1Src = "https://res.cloudinary.com/djdbcoyot/video/upload/q_auto:good,vc_auto/v1/hero-videos/hero-videos/hero-video-optimized.mp4?_a=BAMAPqTI0";
+  // Cloudinary video URL - myherovid from public folder
+  const video1Src = "https://res.cloudinary.com/djdbcoyot/video/upload/q_auto:good,vc_auto/v1/hero-videos/hero-videos/myherovid.mp4?_a=BAMAPqTI0";
   const videoRef1 = useRef<HTMLVideoElement>(null);
 
   return (
