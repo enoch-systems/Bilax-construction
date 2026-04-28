@@ -75,3 +75,35 @@ select {
   width: device-width;
   zoom: 1.0;
 }
+
+/* Smooth scrolling enhancements */
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+body {
+  overscroll-behavior-y: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Momentum scrolling for mobile */
+@supports (-webkit-touch-callout: none) {
+  body {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Performance optimized scrolling */
+* {
+  will-change: auto;
+}
+
+section, 
+main,
+header,
+footer {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
