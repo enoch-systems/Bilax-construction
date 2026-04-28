@@ -345,49 +345,6 @@ export default function Header({ onMenuOpenChange }: HeaderProps) {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  {/* Logout button */}
-                  <motion.button
-                    onClick={async (e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      console.log("Admin mode mobile logout button clicked");
-                      try {
-                        if (supabase) {
-                          const { error } = await supabase.auth.signOut();
-                          if (error) {
-                            console.error("Supabase sign out error:", error);
-                            alert("Logout failed: " + error.message);
-                            return;
-                          } else {
-                            console.log("Successfully signed out");
-                          }
-                        } else {
-                          alert("Logout failed. Please try again.");
-                          return;
-                        }
-                        setIsAccountDropdownOpen(false);
-                        setIsOpen(false);
-                        setIsAdmin(false);
-                        setCameFromAdmin(false);
-                        localStorage.removeItem('cameFromAdmin');
-                        console.log("Redirecting to admin login...");
-                        // Force hard redirect to admin login page
-                        window.location.href = "/admin/login";
-                        return;
-                      } catch (err) {
-                        console.error("Admin mode mobile logout error:", err);
-                        alert("Logout failed. Please try again.");
-                      }
-                    }}
-                    className="cursor-pointer p-2.5 text-red-400 transition-all duration-300 hover:text-white hover:bg-red-500/20 rounded-lg border border-red-500/20"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    title="Logout"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 17l4-4m0 0l-4 4m4-4H18a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6m4 0h2" />
-                    </svg>
-                  </motion.button>
                   <motion.button
                     className="cursor-pointer p-2.5 text-slate-400 transition-all duration-300 hover:text-white hover:bg-slate-700/30 rounded-lg"
                     onClick={() => setIsOpen(false)}
@@ -488,6 +445,54 @@ export default function Header({ onMenuOpenChange }: HeaderProps) {
                       )}
                     </div>
                   </Link>
+                  {/* Logout button */}
+                  <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-4 px-2 pt-4">Account</div>
+                  <button
+                    onClick={async (e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      console.log("Admin mode mobile logout button clicked");
+                      try {
+                        if (supabase) {
+                          const { error } = await supabase.auth.signOut();
+                          if (error) {
+                            console.error("Supabase sign out error:", error);
+                            alert("Logout failed: " + error.message);
+                            return;
+                          } else {
+                            console.log("Successfully signed out");
+                          }
+                        } else {
+                          alert("Logout failed. Please try again.");
+                          return;
+                        }
+                        setIsAccountDropdownOpen(false);
+                        setIsOpen(false);
+                        setIsAdmin(false);
+                        setCameFromAdmin(false);
+                        localStorage.removeItem('cameFromAdmin');
+                        console.log("Redirecting to admin login...");
+                        // Force hard redirect to admin login page
+                        window.location.href = "/admin/login";
+                        return;
+                      } catch (err) {
+                        console.error("Admin mode mobile logout error:", err);
+                        alert("Logout failed. Please try again.");
+                      }
+                    }}
+                    className="group relative w-full px-5 py-4 text-sm font-medium tracking-tight transition-all duration-300 rounded-xl border border-red-500/30 bg-red-500/10 text-red-300 hover:border-red-500/50 hover:bg-red-500/20 hover:text-red-200"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-red-500/20 text-red-400 group-hover:bg-red-500/30 group-hover:text-red-300">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 17l4-4m0 0l-4 4m4-4H18a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6m4 0h2" />
+                          </svg>
+                        </div>
+                        <span>Logout</span>
+                      </div>
+                    </div>
+                  </button>
                 </div>
               ) : (
                 /* User Navigation */
