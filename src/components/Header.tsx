@@ -221,7 +221,8 @@ export default function Header({ onMenuOpenChange }: HeaderProps) {
                       setCameFromAdmin(false);
                       localStorage.removeItem('cameFromAdmin');
                       console.log("Redirecting to home...");
-                      router.push("/");
+                      // Force hard redirect to clear session completely
+                      window.location.href = "/";
                     } catch (err) {
                       console.error("Logout error:", err);
                     }
@@ -260,13 +261,26 @@ export default function Header({ onMenuOpenChange }: HeaderProps) {
                 </Link>
                 <button
                   onClick={async () => {
-                    if (supabase) {
-                      await supabase.auth.signOut();
+                    try {
+                      console.log("Admin page logout clicked");
+                      if (supabase) {
+                        const { error } = await supabase.auth.signOut();
+                        if (error) {
+                          console.error("Supabase sign out error:", error);
+                          alert("Logout failed: " + error.message);
+                          return;
+                        }
+                        console.log("Successfully signed out");
+                      }
+                      setIsAccountDropdownOpen(false);
+                      setCameFromAdmin(false);
+                      localStorage.removeItem('cameFromAdmin');
+                      // Force a hard redirect to ensure session is cleared
+                      window.location.href = "/";
+                    } catch (err) {
+                      console.error("Logout error:", err);
+                      alert("Logout failed. Please try again.");
                     }
-                    setIsAccountDropdownOpen(false);
-                    setCameFromAdmin(false);
-                    localStorage.removeItem('cameFromAdmin');
-                    router.push("/");
                   }}
                   className="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors border-t border-slate-700"
                 >
@@ -450,7 +464,8 @@ export default function Header({ onMenuOpenChange }: HeaderProps) {
                             setCameFromAdmin(false);
                             localStorage.removeItem('cameFromAdmin');
                             console.log("Redirecting to home...");
-                            router.push("/");
+                            // Force hard redirect to clear session completely
+                            window.location.href = "/";
                           } catch (err) {
                             console.error("Mobile logout error:", err);
                           }
