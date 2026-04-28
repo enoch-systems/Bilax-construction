@@ -95,15 +95,9 @@ body {
   }
 }
 
-/* Performance optimized scrolling */
-* {
-  will-change: auto;
-}
-
-section, 
-main,
-header,
-footer {
+/* Performance optimized scrolling - GPU acceleration only where needed */
+.gpu-accelerated {
   transform: translateZ(0);
   backface-visibility: hidden;
+  will-change: transform;
 }

@@ -25,7 +25,7 @@ export default function Hero({ isMenuOpen, onOpenForm }: HeroProps) {
           loop 
           muted 
           playsInline
-          preload="auto"
+          preload="metadata"
           className="h-full w-full object-cover opacity-80"
           src={video1Src}
         />
@@ -37,7 +37,7 @@ export default function Hero({ isMenuOpen, onOpenForm }: HeroProps) {
           loop 
           muted 
           playsInline
-          preload="auto"
+          preload="metadata"
           className="h-full w-full object-cover opacity-60"
           src={video1Src}
         />
