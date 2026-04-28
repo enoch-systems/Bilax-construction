@@ -4,11 +4,6 @@ import React, { useEffect, useRef } from "react";
 import { Phone } from "lucide-react";
 import { motion } from "framer-motion";
 
-function getCloudinaryVideoUrl(publicId?: string) {
-  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-  if (!cloudName || !publicId) return null;
-  return `https://res.cloudinary.com/${cloudName}/video/upload/f_auto,q_auto/${publicId}`;
-}
 
 interface HeroProps {
   isMenuOpen: boolean;
@@ -16,39 +11,9 @@ interface HeroProps {
 }
 
 export default function Hero({ isMenuOpen, onOpenForm }: HeroProps) {
-  const video1Src = getCloudinaryVideoUrl(process.env.NEXT_PUBLIC_CLOUDINARY_HERO_VIDEO_1) ?? "/video1.mp4";
-  const video2Src = getCloudinaryVideoUrl(process.env.NEXT_PUBLIC_CLOUDINARY_HERO_VIDEO_2) ?? "/video2.mp4";
+  // Cloudinary video URL - uploaded optimized hero video
+  const video1Src = "https://res.cloudinary.com/djdbcoyot/video/upload/q_auto:good,vc_auto/v1/hero-videos/hero-videos/hero-video-optimized.mp4?_a=BAMAPqTI0";
   const videoRef1 = useRef<HTMLVideoElement>(null);
-  const videoRef2 = useRef<HTMLVideoElement>(null);
-  const videoRef3 = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    const videos = [videoRef1.current, videoRef2.current, videoRef3.current].filter(Boolean) as HTMLVideoElement[];
-    
-    videos.forEach(video => {
-      const handleCanPlay = () => {
-        video.play().catch(err => {
-          console.log('Autoplay prevented:', err);
-        });
-      };
-
-      const handleError = () => {
-        console.log('Video error, retrying...');
-        setTimeout(() => {
-          video.load();
-          video.play().catch(() => {});
-        }, 1000);
-      };
-
-      video.addEventListener('canplay', handleCanPlay);
-      video.addEventListener('error', handleError);
-
-      return () => {
-        video.removeEventListener('canplay', handleCanPlay);
-        video.removeEventListener('error', handleError);
-      };
-    });
-  }, []);
 
   return (
     <>
@@ -62,33 +27,20 @@ export default function Hero({ isMenuOpen, onOpenForm }: HeroProps) {
           playsInline
           preload="auto"
           className="h-full w-full object-cover opacity-80"
-        >
-          <source src={video1Src} type="video/mp4" />
-        </video>
+          src={video1Src}
+        />
       </div>
       <div className="absolute inset-0 hidden md:flex">
         <video 
-          ref={videoRef2}
+          ref={videoRef1}
           autoPlay 
           loop 
           muted 
           playsInline
           preload="auto"
           className="h-full w-full object-cover opacity-60"
-        >
-          <source src={video1Src} type="video/mp4" />
-        </video>
-        <video 
-          ref={videoRef3}
-          autoPlay 
-          loop 
-          muted 
-          playsInline
-          preload="auto"
-          className="hidden lg:hidden h-full w-1/2 object-cover opacity-60"
-        >
-          <source src={video2Src} type="video/mp4" />
-        </video>
+          src={video1Src}
+        />
       </div>
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-slate-950/97 via-slate-950/85 to-slate-900/90" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_25%_15%,rgba(251,146,60,0.05),transparent_60%),radial-gradient(circle_at_75%_85%,rgba(14,165,233,0.04),transparent_60%)]" />
@@ -150,21 +102,6 @@ export default function Hero({ isMenuOpen, onOpenForm }: HeroProps) {
           </div>
 
           <aside className="flex flex-col gap-6">
-            <div className="relative w-full h-48 rounded-sm overflow-hidden">
-              <video 
-                ref={videoRef1}
-                autoPlay 
-                loop 
-                muted 
-                playsInline
-                preload="auto"
-                controls={false}
-                className="absolute inset-0 w-full h-full object-cover opacity-60 pointer-events-none"
-              >
-                <source src={video2Src} type="video/mp4" />
-              </video>
-              <div className="absolute inset-0 bg-slate-950/30 pointer-events-none" />
-            </div>
             <div className="border-l-2 border-white/10 bg-slate-950/40 p-6 backdrop-blur-md">
               <p className="mb-4 text-xs font-medium uppercase tracking-[0.3em] text-slate-500">Our Services</p>
               <div className="flex flex-col gap-4">
