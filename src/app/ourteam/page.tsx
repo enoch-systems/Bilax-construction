@@ -7,37 +7,37 @@ const teamMembers = [
   {
     name: "Dr. Ayamele Ajuzie",
     role: "CEO & Founder",
-    image: "/ourteam/img1.jfif",
+    image: "https://res.cloudinary.com/djdbcoyot/image/upload/v1777316620/construction/team/img1.jpg",
     bio: "With over 10 years of experience in the construction industry, Dr. Ayamele founded Bilax Constructions with a vision to transform Nigeria's construction landscape.",
   },
   {
     name: "Jude Ajuzie",
     role: "Chief Operations Officer",
-    image: "/ourteam/img2.jfif",
+    image: "https://res.cloudinary.com/djdbcoyot/image/upload/v1777316622/construction/team/img2.jpg",
     bio: "Jude oversees all project operations, ensuring timely delivery and quality control across all our construction sites.",
   },
   {
     name: "Mr. Johnson Helbert",
     role: "Lead Architect",
-    image: "/ourteam/img3.jfif",
+    image: "https://res.cloudinary.com/djdbcoyot/image/upload/v1777316623/construction/team/img3.jpg",
     bio: "Johnson brings creative vision and technical expertise to every project, designing structures that are both beautiful and functional.",
   },
   {
     name: "Ngozi Eze",
     role: "Project Manager",
-    image: "/ourteam/img4.jfif",
+    image: "https://res.cloudinary.com/djdbcoyot/image/upload/v1777316625/construction/team/img4.jpg",
     bio: "Ngozi coordinates our project teams, managing resources and timelines to ensure successful project completion.",
   },
   {
     name: "Ifeanyi Ajuzie",
     role: "Civil Engineer",
-    image: "/ourteam/img5.jfif",
+    image: "https://res.cloudinary.com/djdbcoyot/image/upload/v1777316626/construction/team/img5.jpg",
     bio: "Ifeanyi leads our engineering team, ensuring structural integrity and compliance with all building regulations.",
   },
   {
     name: "Mr. Uchenna Ndubuisi",
     role: "Interior Designer",
-    image: "/ourteam/img6.jfif",
+    image: "https://res.cloudinary.com/djdbcoyot/image/upload/v1777316627/construction/team/img6.jpg",
     bio: "Uchenna transforms interior spaces with creative designs, creating environments that inspire and comfort.",
   },
 ];
