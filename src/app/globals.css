@@ -37,3 +37,13 @@ html {
   scroll-behavior: smooth;
   scroll-restoration: manual;
 }
+
+/* Hide scrollbar for all browsers */
+::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  -ms-overflow-style: none !important;  /* IE and Edge */
+  scrollbar-width: none !important;  /* Firefox */
+}
