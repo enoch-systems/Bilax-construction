@@ -67,7 +67,7 @@ export default function Form({ onClose }: FormProps) {
       if (response.ok) {
         setSubmitStatus("success");
         
-        // Reset form after successful submission
+        // Reset form and route to home after successful submission
         setTimeout(() => {
           setFormData({
             name: "",
@@ -79,6 +79,8 @@ export default function Form({ onClose }: FormProps) {
           });
           setSubmitStatus("idle");
           onClose?.();
+          router.push('/');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         }, 2000);
       } else {
         setSubmitStatus("error");
