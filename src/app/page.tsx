@@ -53,7 +53,7 @@ export default function Home() {
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
         <AboutUs />
       </section>
-      <Services isMenuOpen={isMenuOpen} showViewAllButton={true} />
+      <Services isMenuOpen={isMenuOpen} showViewAllButton={false} />
       <section className={`relative transition-all duration-500 ${isMenuOpen ? "backdrop-blur-2xl opacity-20 scale-95" : ""}`}>
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
         <Gallery />

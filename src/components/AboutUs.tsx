@@ -39,21 +39,46 @@ export default function AboutUs({ showButton = true, showFullText = false }: Abo
           
            
             <div className="-mx-16 px-9 md:-mx-14 md:px-14">
-              <p className="mb-12 text-left text-base leading-relaxed text-slate-400 md:text-xl">
-                Founded with a vision to transform Nigeria's construction landscape, Bilax Constructions has grown from a small family business into a leading construction company over 14+ years.<br /><br />
-                Our journey began with a simple belief: every structure we build should stand as a testament to quality, integrity, and innovation. From humble beginnings, we have built a reputation for excellence that spans across the nation.<br /><br />
-                Over the years, we have completed numerous projects across residential, commercial, and industrial sectors, earning the trust of clients through consistent delivery and exceptional craftsmanship. Our portfolio includes luxury homes, office complexes, industrial facilities, and landmark developments.<br /><br />
-                Today, we continue to push boundaries, embracing modern techniques while honoring the timeless principles of construction excellence. Our team of skilled professionals brings decades of combined experience to every project, ensuring attention to detail and superior workmanship.<br /><br />
-                We are committed to sustainable building practices and innovative solutions that meet the evolving needs of our clients. Whether it's a renovation project or a new development, Bilax Constructions delivers results that exceed expectations and stand the test of time.
-              </p>
-            </div>
-            {showButton && (
-              <div className="flex justify-center">
-                <Link href="/about" className="cursor-pointer rounded-sm border border-amber-500/30 bg-amber-500/10 px-9 py-3.5 text-sm font-medium text-amber-100 transition-all hover:border-amber-500/50 hover:bg-amber-500/20 md:px-11 md:text-base">
-                  Learn More
-                </Link>
+              {/* Mobile: Different behavior based on showFullText prop */}
+              <div className="md:hidden">
+                {showFullText ? (
+                  // On about page - show full text
+                  <p className="mb-12 text-left text-base leading-relaxed text-slate-400">
+                    Founded with a vision to transform Nigeria's construction landscape, Bilax Constructions has grown from a small family business into a leading construction company over 14+ years.<br /><br />
+                    Our journey began with a simple belief: every structure we build should stand as a testament to quality, integrity, and innovation. From humble beginnings, we have built a reputation for excellence that spans across the nation.<br /><br />
+                    Over the years, we have completed numerous projects across residential, commercial, and industrial sectors, earning the trust of clients through consistent delivery and exceptional craftsmanship. Our portfolio includes luxury homes, office complexes, industrial facilities, and landmark developments.<br /><br />
+                    Today, we continue to push boundaries, embracing modern techniques while honoring the timeless principles of construction excellence. Our team of skilled professionals brings decades of combined experience to every project, ensuring attention to detail and superior workmanship.<br /><br />
+                    We are committed to sustainable building practices and innovative solutions that meet the evolving needs of our clients. Whether it's a renovation project or a new development, Bilax Constructions delivers results that exceed expectations and stand the test of time.
+                  </p>
+                ) : (
+                  // On home page - show truncated text with Learn More button
+                  <>
+                    <p className="mb-6 text-left text-base leading-relaxed text-slate-400">
+                      Founded with a vision to transform Nigeria's construction landscape, Bilax Constructions has grown from a small family business into a leading construction company over 14+ years.<br /><br />
+                      Our journey began with a simple belief: every structure we build should stand as a testament to quality, integrity, and innovation. From humble beginnings, we have built a reputation for excellence that spans across the nation.
+                    </p>
+                    {showButton && (
+                      <div className="flex justify-center mb-6">
+                        <Link href="/about" className="cursor-pointer rounded-sm border border-amber-500/30 bg-amber-500/10 px-9 py-3.5 text-sm font-medium text-amber-100 transition-all hover:border-amber-500/50 hover:bg-amber-500/20">
+                          Learn More
+                        </Link>
+                      </div>
+                    )}
+                  </>
+                )}
               </div>
-            )}
+
+              {/* Desktop: Full text */}
+              <div className="hidden md:block">
+                <p className="mb-12 text-left text-xl leading-relaxed text-slate-400">
+                  Founded with a vision to transform Nigeria's construction landscape, Bilax Constructions has grown from a small family business into a leading construction company over 14+ years.<br /><br />
+                  Our journey began with a simple belief: every structure we build should stand as a testament to quality, integrity, and innovation. From humble beginnings, we have built a reputation for excellence that spans across the nation.<br /><br />
+                  Over the years, we have completed numerous projects across residential, commercial, and industrial sectors, earning the trust of clients through consistent delivery and exceptional craftsmanship. Our portfolio includes luxury homes, office complexes, industrial facilities, and landmark developments.<br /><br />
+                  Today, we continue to push boundaries, embracing modern techniques while honoring the timeless principles of construction excellence. Our team of skilled professionals brings decades of combined experience to every project, ensuring attention to detail and superior workmanship.<br /><br />
+                  We are committed to sustainable building practices and innovative solutions that meet the evolving needs of our clients. Whether it's a renovation project or a new development, Bilax Constructions delivers results that exceed expectations and stand the test of time.
+                </p>
+              </div>
+            </div>
           </div>
 
           <Results />
