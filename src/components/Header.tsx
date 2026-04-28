@@ -16,6 +16,7 @@ export default function Header({ onMenuOpenChange }: HeaderProps) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
   const [cameFromAdmin, setCameFromAdmin] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
   const accountDropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -346,6 +347,19 @@ export default function Header({ onMenuOpenChange }: HeaderProps) {
                 </div>
                 <div className="flex items-center gap-2">
                   <motion.button
+                    onClick={() => {
+                      setIsOpen(false);
+                      setCameFromAdmin(true);
+                      localStorage.setItem('cameFromAdmin', 'true');
+                      router.push("/");
+                    }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="cursor-pointer px-3 py-2 text-xs font-medium text-slate-300 bg-slate-800/50 border border-slate-700/50 rounded-lg hover:bg-slate-700/50 hover:text-white transition-all duration-300"
+                  >
+                    View Site
+                  </motion.button>
+                  <motion.button
                     className="cursor-pointer p-2.5 text-slate-400 transition-all duration-300 hover:text-white hover:bg-slate-700/30 rounded-lg"
                     onClick={() => setIsOpen(false)}
                     whileHover={{ scale: 1.05 }}
@@ -365,16 +379,31 @@ export default function Header({ onMenuOpenChange }: HeaderProps) {
                     <span className="text-amber-400/90">Bilax</span>{" "}
                     <span className="text-slate-200">Constructions</span>
                   </span>
-                <motion.button
-                  className="cursor-pointer p-2 text-slate-400 transition-all duration-300 hover:text-white"
-                  onClick={() => setIsOpen(false)}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </motion.button>
+                  <div className="flex items-center gap-2">
+                    {isAdmin && !isAdminPage && (
+                      <motion.button
+                        onClick={() => {
+                          setIsOpen(false);
+                          router.push("/admin/dashboard");
+                        }}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="cursor-pointer px-3 py-2 text-xs font-medium text-amber-300 bg-amber-500/10 border border-amber-500/30 rounded-lg hover:bg-amber-500/20 hover:text-amber-200 transition-all duration-300"
+                      >
+                        View as Admin
+                      </motion.button>
+                    )}
+                    <motion.button
+                      className="cursor-pointer p-2 text-slate-400 transition-all duration-300 hover:text-white"
+                      onClick={() => setIsOpen(false)}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </motion.button>
+                  </div>
               </div>
               </>
             )}
@@ -385,27 +414,12 @@ export default function Header({ onMenuOpenChange }: HeaderProps) {
                 /* Admin Navigation */
                 <div className="w-full max-w-sm space-y-3">
                   <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-4 px-2">Main Menu</div>
-                  <Link href="/admin/dashboard" onClick={() => setIsOpen(false)} className={`group relative w-full px-5 py-4 text-sm font-medium tracking-tight transition-all duration-300 rounded-xl border ${pathname === "/admin/dashboard" ? "border-amber-500/40 bg-amber-500/10 text-amber-300" : "border-slate-700/50 bg-slate-800/30 text-slate-300 hover:border-slate-600 hover:bg-slate-700/30 hover:text-white"}`}>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className={`p-2 rounded-lg ${pathname === "/admin/dashboard" ? "bg-amber-500/20 text-amber-400" : "bg-slate-700/50 text-slate-400 group-hover:bg-slate-600 group-hover:text-slate-300"}`}>
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l2-2m-2 2l2 2m-2 2l2 2M12 12l9-9m-9 0l9-9" />
-                          </svg>
-                        </div>
-                        <span>Dashboard</span>
-                      </div>
-                      {pathname === "/admin/dashboard" && (
-                        <div className="w-1.5 h-1.5 bg-amber-400 rounded-full" />
-                      )}
-                    </div>
-                  </Link>
                   <Link href="/admin/gallery" onClick={() => setIsOpen(false)} className={`group relative w-full px-5 py-4 text-sm font-medium tracking-tight transition-all duration-300 rounded-xl border ${pathname === "/admin/gallery" ? "border-amber-500/40 bg-amber-500/10 text-amber-300" : "border-slate-700/50 bg-slate-800/30 text-slate-300 hover:border-slate-600 hover:bg-slate-700/30 hover:text-white"}`}>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         <div className={`p-2 rounded-lg ${pathname === "/admin/gallery" ? "bg-amber-500/20 text-amber-400" : "bg-slate-700/50 text-slate-400 group-hover:bg-slate-600 group-hover:text-slate-300"}`}>
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 0 1 2.828 0l16-16a2 2 0 0 1 0 2.828l-8.586 8.586" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l2-2m-2 2l2 2m-2 2l2 2M12 12l9-9m-9 0l9-9" />
                           </svg>
                         </div>
                         <span>Gallery</span>
@@ -415,84 +429,39 @@ export default function Header({ onMenuOpenChange }: HeaderProps) {
                       )}
                     </div>
                   </Link>
-                  <Link href="/admin/team" onClick={() => setIsOpen(false)} className={`group relative w-full px-5 py-4 text-sm font-medium tracking-tight transition-all duration-300 rounded-xl border ${pathname === "/admin/team" ? "border-amber-500/40 bg-amber-500/10 text-amber-300" : "border-slate-700/50 bg-slate-800/30 text-slate-300 hover:border-slate-600 hover:bg-slate-700/30 hover:text-white"}`}>
+                  <Link href="/admin/projects" onClick={() => setIsOpen(false)} className={`group relative w-full px-5 py-4 text-sm font-medium tracking-tight transition-all duration-300 rounded-xl border ${pathname === "/admin/projects" ? "border-amber-500/40 bg-amber-500/10 text-amber-300" : "border-slate-700/50 bg-slate-800/30 text-slate-300 hover:border-slate-600 hover:bg-slate-700/30 hover:text-white"}`}>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <div className={`p-2 rounded-lg ${pathname === "/admin/team" ? "bg-amber-500/20 text-amber-400" : "bg-slate-700/50 text-slate-400 group-hover:bg-slate-600 group-hover:text-slate-300"}`}>
+                        <div className={`p-2 rounded-lg ${pathname === "/admin/projects" ? "bg-amber-500/20 text-amber-400" : "bg-slate-700/50 text-slate-400 group-hover:bg-slate-600 group-hover:text-slate-300"}`}>
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M17 21l-2-2M9 21l2-2M17 7l-2-2M9 7l2 2" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 0 1 2.828 0l16-16a2 2 0 0 1 0 2.828l-8.586 8.586" />
                           </svg>
                         </div>
-                        <span>Team</span>
+                        <span>Projects</span>
                       </div>
-                      {pathname === "/admin/team" && (
+                      {pathname === "/admin/projects" && (
                         <div className="w-1.5 h-1.5 bg-amber-400 rounded-full" />
                       )}
                     </div>
                   </Link>
-                  <Link href="/admin/settings" onClick={() => setIsOpen(false)} className={`group relative w-full px-5 py-4 text-sm font-medium tracking-tight transition-all duration-300 rounded-xl border ${pathname === "/admin/settings" ? "border-amber-500/40 bg-amber-500/10 text-amber-300" : "border-slate-700/50 bg-slate-800/30 text-slate-300 hover:border-slate-600 hover:bg-slate-700/30 hover:text-white"}`}>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className={`p-2 rounded-lg ${pathname === "/admin/settings" ? "bg-amber-500/20 text-amber-400" : "bg-slate-700/50 text-slate-400 group-hover:bg-slate-600 group-hover:text-slate-300"}`}>
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 1-.063 2.894-1.756 3.35 0 1.724 1.724 0 0 1-.063m-3.35 6.828a1.724 1.724 0 0 1-2.894 1.756-3.35 0-1.724-1.724 0 0 1-.063m-3.35 6.828a1.724 1.724 0 0 1 2.894 1.756 3.35 0 1.724 1.724 0 0 1-.063M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                          </svg>
+                  {/* Logout button at bottom */}
+                  <div className="w-full max-w-sm space-y-3 pt-8">
+                    <button
+                      onClick={() => setShowLogoutModal(true)}
+                      className="group relative w-full px-5 py-4 text-sm font-medium tracking-tight transition-all duration-300 rounded-xl border border-red-500/30 bg-red-500/10 text-red-300 hover:border-red-500/50 hover:bg-red-500/20 hover:text-red-200 cursor-pointer"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 rounded-lg bg-red-500/20 text-red-400 group-hover:bg-red-500/30 group-hover:text-red-300">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 17l4-4m0 0l-4 4m4-4H18a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6m4 0h2" />
+                            </svg>
+                          </div>
+                          <span>Logout</span>
                         </div>
-                        <span>Settings</span>
                       </div>
-                      {pathname === "/admin/settings" && (
-                        <div className="w-1.5 h-1.5 bg-amber-400 rounded-full" />
-                      )}
-                    </div>
-                  </Link>
-                  {/* Logout button */}
-                  <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-4 px-2 pt-4">Account</div>
-                  <button
-                    onClick={async (e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      console.log("Admin mode mobile logout button clicked");
-                      try {
-                        if (supabase) {
-                          const { error } = await supabase.auth.signOut();
-                          if (error) {
-                            console.error("Supabase sign out error:", error);
-                            alert("Logout failed: " + error.message);
-                            return;
-                          } else {
-                            console.log("Successfully signed out");
-                          }
-                        } else {
-                          alert("Logout failed. Please try again.");
-                          return;
-                        }
-                        setIsAccountDropdownOpen(false);
-                        setIsOpen(false);
-                        setIsAdmin(false);
-                        setCameFromAdmin(false);
-                        localStorage.removeItem('cameFromAdmin');
-                        console.log("Redirecting to admin login...");
-                        // Force hard redirect to admin login page
-                        window.location.href = "/admin/login";
-                        return;
-                      } catch (err) {
-                        console.error("Admin mode mobile logout error:", err);
-                        alert("Logout failed. Please try again.");
-                      }
-                    }}
-                    className="group relative w-full px-5 py-4 text-sm font-medium tracking-tight transition-all duration-300 rounded-xl border border-red-500/30 bg-red-500/10 text-red-300 hover:border-red-500/50 hover:bg-red-500/20 hover:text-red-200"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 rounded-lg bg-red-500/20 text-red-400 group-hover:bg-red-500/30 group-hover:text-red-300">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 17l4-4m0 0l-4 4m4-4H18a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6m4 0h2" />
-                          </svg>
-                        </div>
-                        <span>Logout</span>
-                      </div>
-                    </div>
-                  </button>
+                    </button>
+                  </div>
                 </div>
               ) : (
                 /* User Navigation */
@@ -538,62 +507,16 @@ export default function Header({ onMenuOpenChange }: HeaderProps) {
             <div className="px-6 py-8 border-t border-white/5">
               {isAdmin && !isAdminPage ? (
                 <div className="space-y-3">
-                  <motion.button
-                    onClick={() => {
-                      setIsOpen(false);
-                      router.push("/admin/dashboard");
-                    }}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="cursor-pointer block w-full rounded-full border border-amber-500/30 bg-gradient-to-r from-amber-500/10 to-amber-500/5 px-8 py-4 text-center text-base font-medium text-amber-100 transition-all duration-500 hover:border-amber-500/50 hover:from-amber-500/20 hover:to-amber-500/10 hover:shadow-lg hover:shadow-amber-500/20 flex items-center justify-center gap-2"
-                  >
-                    <User className="w-4 h-4" />
-                    View as Admin
-                  </motion.button>
+                  {/* No buttons needed in this section */}
                 </div>
               ) : isAdmin && isAdminPage ? (
                 <div className="space-y-3">
-                  <motion.button
-                    onClick={() => setIsAccountDropdownOpen(!isAccountDropdownOpen)}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="cursor-pointer block w-full rounded-full border border-amber-500/30 bg-gradient-to-r from-amber-500/10 to-amber-500/5 px-8 py-4 text-center text-base font-medium text-amber-100 transition-all duration-500 hover:border-amber-500/50 hover:from-amber-500/20 hover:to-amber-500/10 hover:shadow-lg hover:shadow-amber-500/20 flex items-center justify-center gap-2"
-                  >
-                    <User className="w-4 h-4" />
-                    My Account
-                  </motion.button>
-                  {isAccountDropdownOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="rounded-sm border border-slate-700 bg-slate-800/95 backdrop-blur-sm shadow-xl overflow-hidden"
-                    >
-                      <Link
-                        href="/admin/dashboard"
-                        target="_blank"
-                        onClick={() => {
-                          setIsAccountDropdownOpen(false);
-                          setIsOpen(false);
-                        }}
-                        className="block px-4 py-3 text-sm text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors"
-                      >
-                        Dashboard
-                      </Link>
-                    </motion.div>
-                  )}
+                  {/* No buttons needed in this section */}
                 </div>
               ) : cameFromAdmin && isAdmin ? (
-                <motion.button
-                  onClick={() => {
-                    setIsOpen(false);
-                    router.push("/admin/dashboard");
-                  }}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="cursor-pointer block w-full rounded-full border border-amber-500/30 bg-gradient-to-r from-amber-500/10 to-amber-500/5 px-8 py-4 text-center text-base font-medium text-amber-100 transition-all duration-500 hover:border-amber-500/50 hover:from-amber-500/20 hover:to-amber-500/10 hover:shadow-lg hover:shadow-amber-500/20"
-                >
-                  View as Admin
-                </motion.button>
+                <div className="space-y-3">
+                  {/* No buttons needed in this section */}
+                </div>
               ) : (
                 <motion.a
                   href="https://wa.me/2349162919586?text=Hello%2C%20I%20would%20like%20to%20request%20a%20free%20consultation%20for%20my%20construction%20project."
@@ -606,6 +529,58 @@ export default function Header({ onMenuOpenChange }: HeaderProps) {
                   Free Consultation
                 </motion.a>
               )}
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Logout Modal */}
+      {showLogoutModal && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <div className="bg-slate-900 border border-slate-700 rounded-2xl p-6 max-w-sm w-full mx-4 shadow-2xl">
+            <h3 className="text-lg font-semibold text-white mb-2">Confirm Logout</h3>
+            <p className="text-slate-400 mb-6">Are you sure you want to logout? You will need to login again to access the admin panel.</p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowLogoutModal(false)}
+                className="flex-1 px-4 py-2.5 text-sm font-medium text-slate-300 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={async () => {
+                  try {
+                    if (supabase) {
+                      const { error } = await supabase.auth.signOut();
+                      if (error) {
+                        console.error("Supabase sign out error:", error);
+                        alert("Logout failed: " + error.message);
+                        return;
+                      } else {
+                        console.log("Successfully signed out");
+                      }
+                    } else {
+                      alert("Logout failed. Please try again.");
+                      return;
+                    }
+                    setIsAccountDropdownOpen(false);
+                    setIsOpen(false);
+                    setIsAdmin(false);
+                    setCameFromAdmin(false);
+                    localStorage.removeItem('cameFromAdmin');
+                    setShowLogoutModal(false);
+                    console.log("Redirecting to admin login...");
+                    // Force hard redirect to admin login page
+                    window.location.href = "/admin/login";
+                    return;
+                  } catch (err) {
+                    console.error("Admin mode mobile logout error:", err);
+                    alert("Logout failed. Please try again.");
+                  }
+                }}
+                className="flex-1 px-4 py-2.5 text-sm font-medium text-white bg-red-500 hover:bg-red-600 rounded-lg transition-colors cursor-pointer"
+              >
+                Logout
+              </button>
             </div>
           </div>
         </div>
