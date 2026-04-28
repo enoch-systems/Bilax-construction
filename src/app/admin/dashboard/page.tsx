@@ -17,26 +17,69 @@ export default function AdminDashboardPage() {
   const router = useRouter();
 
   useEffect(() => {
+    console.log('Dashboard useEffect triggered');
+    console.log('Supabase client:', supabase);
+    
     if (!supabase) {
+      console.log('No supabase client, redirecting to login');
       router.push("/admin/login");
       return;
     }
   
     const checkAuth = async () => {
-      const { data: { session } } = await supabase!.auth.getSession();
-      if (!session) {
+      console.log('Checking auth...');
+      try {
+        const { data: { session }, error } = await supabase!.auth.getSession();
+        
+        console.log('Session data:', session);
+        console.log('Session error:', error);
+        
+        if (error) {
+          console.error('Auth session error:', error);
+          // Handle refresh token errors specifically
+          if (error.message?.includes('Refresh Token Not Found') || 
+              error.message?.includes('Invalid Refresh Token')) {
+            // Clear any stored session and redirect to login
+            await supabase!.auth.signOut();
+            router.push("/admin/login");
+            return;
+          }
+          router.push("/admin/login");
+          return;
+        }
+        
+        if (!session) {
+          console.log('No session found, redirecting to login');
+          router.push("/admin/login");
+        } else {
+          console.log('Session found, setting authenticated to true');
+          setIsAuthenticated(true);
+        }
+      } catch (error) {
+        console.error('Auth check error:', error);
         router.push("/admin/login");
-      } else {
-        setIsAuthenticated(true);
       }
     };
 
     checkAuth();
 
-    const { data: { subscription } } = supabase!.auth.onAuthStateChange((_event, session) => {
-      if (!session) {
+    const { data: { subscription } } = supabase!.auth.onAuthStateChange(async (event, session) => {
+      console.log('Auth state changed:', event, session ? 'session exists' : 'no session');
+      console.log('Session details:', session);
+      
+      if (event === 'TOKEN_REFRESHED' && session) {
+        // Token was successfully refreshed
+        console.log('Token refreshed, setting authenticated to true');
+        setIsAuthenticated(true);
+        return;
+      }
+      
+      if (event === 'SIGNED_OUT' || !session) {
+        console.log('Signed out or no session, setting authenticated to false');
+        setIsAuthenticated(false);
         router.push("/admin/login");
-      } else {
+      } else if (session) {
+        console.log('Session exists, setting authenticated to true');
         setIsAuthenticated(true);
       }
     });

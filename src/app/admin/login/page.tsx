@@ -1,3 +1,5 @@
+
+
 "use client";
 
 import { useState } from "react";
@@ -70,7 +72,7 @@ export default function AdminLoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full rounded-sm border border-slate-700 bg-slate-800/50 px-4 py-3 text-white placeholder-slate-500 focus:border-amber-500/50 focus:outline-none focus:ring-1 focus:ring-amber-500/50"
-                  placeholder="admin@example.com"
+                  placeholder="admin@"
                   required
                 />
               </div>
@@ -85,7 +87,7 @@ export default function AdminLoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full rounded-sm border border-slate-700 bg-slate-800/50 px-4 py-3 text-white placeholder-slate-500 focus:border-amber-500/50 focus:outline-none focus:ring-1 focus:ring-amber-500/50"
-                  placeholder="Enter password"
+                  placeholder="••••••••"
                   required
                 />
               </div>
