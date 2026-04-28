@@ -13,31 +13,47 @@ interface HeroProps {
 export default function Hero({ isMenuOpen, onOpenForm }: HeroProps) {
   // Cloudinary video URL - myherovid from public folder
   const video1Src = "https://res.cloudinary.com/djdbcoyot/video/upload/q_auto:good,vc_auto/v1/hero-videos/hero-videos/myherovid.mp4?_a=BAMAPqTI0";
-  const videoRef1 = useRef<HTMLVideoElement>(null);
+  const videoRefMobile = useRef<HTMLVideoElement>(null);
+  const videoRefDesktop = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const playVideo = async (video: HTMLVideoElement | null) => {
+      if (!video) return;
+      try {
+        video.muted = true;
+        await video.play();
+      } catch (err) {
+        console.log('Video autoplay failed:', err);
+      }
+    };
+
+    playVideo(videoRefMobile.current);
+    playVideo(videoRefDesktop.current);
+  }, []);
 
   return (
     <>
       <section className="relative flex min-h-screen flex-col overflow-hidden bg-slate-950">
       <div className="absolute inset-0 flex md:hidden">
         <video 
-          ref={videoRef1}
+          ref={videoRefMobile}
           autoPlay 
           loop 
           muted 
           playsInline
-          preload="metadata"
+          preload="auto"
           className="h-full w-full object-cover opacity-80"
           src={video1Src}
         />
       </div>
       <div className="absolute inset-0 hidden md:flex">
         <video 
-          ref={videoRef1}
+          ref={videoRefDesktop}
           autoPlay 
           loop 
           muted 
           playsInline
-          preload="metadata"
+          preload="auto"
           className="h-full w-full object-cover opacity-60"
           src={video1Src}
         />
