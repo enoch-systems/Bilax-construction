@@ -1,12 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter, usePathname } from "next/navigation";
 
 export default function RefreshHandler() {
-  const router = useRouter();
-  const pathname = usePathname();
-
   useEffect(() => {
     // Check if page was refreshed (not initial load)
     const navigationEntries = performance.getEntriesByType("navigation");
@@ -18,14 +14,10 @@ export default function RefreshHandler() {
       (performance.navigation as any).type === 1;
 
     if (isReload || isLegacyReload) {
-      // If not on home page, redirect to home
-      if (pathname !== "/") {
-        router.push("/");
-      }
-      // Always scroll to top on refresh
+      // Scroll to top of current page on refresh
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
-  }, [pathname, router]);
+  }, []);
 
   return null;
 }
