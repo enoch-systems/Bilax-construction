@@ -218,11 +218,12 @@ export default function Header({ onMenuOpenChange }: HeaderProps) {
                         console.log("Supabase not available");
                       }
                       setIsAccountDropdownOpen(false);
+                      setIsAdmin(false);
                       setCameFromAdmin(false);
                       localStorage.removeItem('cameFromAdmin');
-                      console.log("Redirecting to home...");
-                      // Force hard redirect to clear session completely
-                      window.location.href = "/";
+                      console.log("Redirecting to admin login...");
+                      // Force hard redirect to admin login page
+                      window.location.href = "/admin/login";
                     } catch (err) {
                       console.error("Logout error:", err);
                     }
@@ -275,8 +276,8 @@ export default function Header({ onMenuOpenChange }: HeaderProps) {
                       setIsAccountDropdownOpen(false);
                       setCameFromAdmin(false);
                       localStorage.removeItem('cameFromAdmin');
-                      // Force a hard redirect to ensure session is cleared
-                      window.location.href = "/";
+                      // Force hard redirect to admin login page
+                      window.location.href = "/admin/login";
                     } catch (err) {
                       console.error("Logout error:", err);
                       alert("Logout failed. Please try again.");
@@ -330,25 +331,166 @@ export default function Header({ onMenuOpenChange }: HeaderProps) {
       {isOpen && (
         <div className="md:hidden fixed inset-0 z-[100] bg-slate-950/95 backdrop-blur-2xl">
           <div className="flex h-full flex-col">
-            <div className="flex items-center justify-between px-6 py-6 border-b border-white/5">
-              <span className="text-sm font-medium tracking-wide">
-                <span className="text-amber-400/90">Bilax</span>{" "}
-                <span className="text-slate-200">Constructions</span>
-              </span>
-              <motion.button
-                className="cursor-pointer p-2 text-slate-400 transition-all duration-300 hover:text-white"
-                onClick={() => setIsOpen(false)}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                    >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </motion.button>
-            </div>
+            {/* Admin Header */}
+            {isAdmin && isAdminPage ? (
+              <div className="flex items-center justify-between px-6 py-5 border-b border-white/5 bg-gradient-to-b from-slate-900/80 to-slate-950/80">
+                <div className="flex items-center gap-3">
+                  <div className="relative">
+                    <div className="w-2.5 h-2.5 bg-amber-500 rounded-full" />
+                    <div className="absolute inset-0 w-2.5 h-2.5 bg-amber-500 rounded-full animate-ping opacity-75" />
+                  </div>
+                  <div>
+                    <span className="text-xs font-semibold tracking-wider text-amber-400 uppercase">Admin Panel</span>
+                    <p className="text-[10px] text-slate-500">Management System</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  {/* Logout button */}
+                  <motion.button
+                    onClick={async (e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      console.log("Admin mode mobile logout button clicked");
+                      try {
+                        if (supabase) {
+                          const { error } = await supabase.auth.signOut();
+                          if (error) {
+                            console.error("Supabase sign out error:", error);
+                            alert("Logout failed: " + error.message);
+                            return;
+                          } else {
+                            console.log("Successfully signed out");
+                          }
+                        } else {
+                          alert("Logout failed. Please try again.");
+                          return;
+                        }
+                        setIsAccountDropdownOpen(false);
+                        setIsOpen(false);
+                        setIsAdmin(false);
+                        setCameFromAdmin(false);
+                        localStorage.removeItem('cameFromAdmin');
+                        console.log("Redirecting to admin login...");
+                        // Force hard redirect to admin login page
+                        window.location.href = "/admin/login";
+                        return;
+                      } catch (err) {
+                        console.error("Admin mode mobile logout error:", err);
+                        alert("Logout failed. Please try again.");
+                      }
+                    }}
+                    className="cursor-pointer p-2.5 text-red-400 transition-all duration-300 hover:text-white hover:bg-red-500/20 rounded-lg border border-red-500/20"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    title="Logout"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 17l4-4m0 0l-4 4m4-4H18a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6m4 0h2" />
+                    </svg>
+                  </motion.button>
+                  <motion.button
+                    className="cursor-pointer p-2.5 text-slate-400 transition-all duration-300 hover:text-white hover:bg-slate-700/30 rounded-lg"
+                    onClick={() => setIsOpen(false)}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </motion.button>
+                </div>
+              </div>
+            ) : (
+              <>
+                {/* User Header */}
+                <div className="flex items-center justify-between px-6 py-5 border-b border-white/5">
+                  <span className="text-sm font-medium tracking-wide">
+                    <span className="text-amber-400/90">Bilax</span>{" "}
+                    <span className="text-slate-200">Constructions</span>
+                  </span>
+                <motion.button
+                  className="cursor-pointer p-2 text-slate-400 transition-all duration-300 hover:text-white"
+                  onClick={() => setIsOpen(false)}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </motion.button>
+              </div>
+              </>
+            )}
             
-            <nav className="flex flex-1 flex-col items-center justify-center gap-6 px-6 pt-8">
-              {!isAdminPage ? (
+            {/* Navigation */}
+            <nav className="flex flex-1 flex-col items-center justify-center gap-2 px-6 pt-8">
+              {isAdmin && isAdminPage ? (
+                /* Admin Navigation */
+                <div className="w-full max-w-sm space-y-3">
+                  <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-4 px-2">Main Menu</div>
+                  <Link href="/admin/dashboard" onClick={() => setIsOpen(false)} className={`group relative w-full px-5 py-4 text-sm font-medium tracking-tight transition-all duration-300 rounded-xl border ${pathname === "/admin/dashboard" ? "border-amber-500/40 bg-amber-500/10 text-amber-300" : "border-slate-700/50 bg-slate-800/30 text-slate-300 hover:border-slate-600 hover:bg-slate-700/30 hover:text-white"}`}>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className={`p-2 rounded-lg ${pathname === "/admin/dashboard" ? "bg-amber-500/20 text-amber-400" : "bg-slate-700/50 text-slate-400 group-hover:bg-slate-600 group-hover:text-slate-300"}`}>
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l2-2m-2 2l2 2m-2 2l2 2M12 12l9-9m-9 0l9-9" />
+                          </svg>
+                        </div>
+                        <span>Dashboard</span>
+                      </div>
+                      {pathname === "/admin/dashboard" && (
+                        <div className="w-1.5 h-1.5 bg-amber-400 rounded-full" />
+                      )}
+                    </div>
+                  </Link>
+                  <Link href="/admin/gallery" onClick={() => setIsOpen(false)} className={`group relative w-full px-5 py-4 text-sm font-medium tracking-tight transition-all duration-300 rounded-xl border ${pathname === "/admin/gallery" ? "border-amber-500/40 bg-amber-500/10 text-amber-300" : "border-slate-700/50 bg-slate-800/30 text-slate-300 hover:border-slate-600 hover:bg-slate-700/30 hover:text-white"}`}>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className={`p-2 rounded-lg ${pathname === "/admin/gallery" ? "bg-amber-500/20 text-amber-400" : "bg-slate-700/50 text-slate-400 group-hover:bg-slate-600 group-hover:text-slate-300"}`}>
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 0 1 2.828 0l16-16a2 2 0 0 1 0 2.828l-8.586 8.586" />
+                          </svg>
+                        </div>
+                        <span>Gallery</span>
+                      </div>
+                      {pathname === "/admin/gallery" && (
+                        <div className="w-1.5 h-1.5 bg-amber-400 rounded-full" />
+                      )}
+                    </div>
+                  </Link>
+                  <Link href="/admin/team" onClick={() => setIsOpen(false)} className={`group relative w-full px-5 py-4 text-sm font-medium tracking-tight transition-all duration-300 rounded-xl border ${pathname === "/admin/team" ? "border-amber-500/40 bg-amber-500/10 text-amber-300" : "border-slate-700/50 bg-slate-800/30 text-slate-300 hover:border-slate-600 hover:bg-slate-700/30 hover:text-white"}`}>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className={`p-2 rounded-lg ${pathname === "/admin/team" ? "bg-amber-500/20 text-amber-400" : "bg-slate-700/50 text-slate-400 group-hover:bg-slate-600 group-hover:text-slate-300"}`}>
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M17 21l-2-2M9 21l2-2M17 7l-2-2M9 7l2 2" />
+                          </svg>
+                        </div>
+                        <span>Team</span>
+                      </div>
+                      {pathname === "/admin/team" && (
+                        <div className="w-1.5 h-1.5 bg-amber-400 rounded-full" />
+                      )}
+                    </div>
+                  </Link>
+                  <Link href="/admin/settings" onClick={() => setIsOpen(false)} className={`group relative w-full px-5 py-4 text-sm font-medium tracking-tight transition-all duration-300 rounded-xl border ${pathname === "/admin/settings" ? "border-amber-500/40 bg-amber-500/10 text-amber-300" : "border-slate-700/50 bg-slate-800/30 text-slate-300 hover:border-slate-600 hover:bg-slate-700/30 hover:text-white"}`}>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className={`p-2 rounded-lg ${pathname === "/admin/settings" ? "bg-amber-500/20 text-amber-400" : "bg-slate-700/50 text-slate-400 group-hover:bg-slate-600 group-hover:text-slate-300"}`}>
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 1-.063 2.894-1.756 3.35 0 1.724 1.724 0 0 1-.063m-3.35 6.828a1.724 1.724 0 0 1-2.894 1.756-3.35 0-1.724-1.724 0 0 1-.063m-3.35 6.828a1.724 1.724 0 0 1 2.894 1.756 3.35 0 1.724 1.724 0 0 1-.063M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                          </svg>
+                        </div>
+                        <span>Settings</span>
+                      </div>
+                      {pathname === "/admin/settings" && (
+                        <div className="w-1.5 h-1.5 bg-amber-400 rounded-full" />
+                      )}
+                    </div>
+                  </Link>
+                </div>
+              ) : (
+                /* User Navigation */
                 <>
                   <Link href="/" onClick={() => setIsOpen(false)} className={`relative px-6 py-3 text-sm font-semibold tracking-tight transition-all duration-500 ${pathname === "/" ? "text-amber-400" : "text-slate-400 hover:text-white"}`}>
                     Home
@@ -385,18 +527,6 @@ export default function Header({ onMenuOpenChange }: HeaderProps) {
                     </Link>
                   )}
                 </>
-              ) : (
-                <button
-                  onClick={() => {
-                    setIsOpen(false);
-                    setCameFromAdmin(true);
-                    localStorage.setItem('cameFromAdmin', 'true');
-                    router.push("/");
-                  }}
-                  className="px-6 py-3 text-sm font-semibold tracking-tight transition-all duration-500 rounded-sm border border-amber-500/30 bg-amber-500/10 text-amber-400 hover:border-amber-500/50 hover:bg-amber-500/20 hover:text-white cursor-pointer"
-                >
-                  View in User Mode
-                </button>
               )}
             </nav>
 
@@ -444,36 +574,6 @@ export default function Header({ onMenuOpenChange }: HeaderProps) {
                       >
                         Dashboard
                       </Link>
-                      <button
-                        onClick={async () => {
-                          try {
-                            console.log("Mobile logout button clicked");
-                            if (supabase) {
-                              console.log("Signing out from Supabase...");
-                              const { error } = await supabase.auth.signOut();
-                              if (error) {
-                                console.error("Supabase sign out error:", error);
-                              } else {
-                                console.log("Successfully signed out");
-                              }
-                            } else {
-                              console.log("Supabase not available");
-                            }
-                            setIsAccountDropdownOpen(false);
-                            setIsOpen(false);
-                            setCameFromAdmin(false);
-                            localStorage.removeItem('cameFromAdmin');
-                            console.log("Redirecting to home...");
-                            // Force hard redirect to clear session completely
-                            window.location.href = "/";
-                          } catch (err) {
-                            console.error("Mobile logout error:", err);
-                          }
-                        }}
-                        className="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors border-t border-slate-700"
-                      >
-                        Logout
-                      </button>
                     </motion.div>
                   )}
                 </div>
