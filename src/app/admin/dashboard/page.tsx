@@ -379,7 +379,6 @@ function GalleryUploadForm() {
             onChange={handleImageChange}
             className="hidden"
             id="upload-card"
-            capture="environment"
             disabled={isUploading}
           />
           <label
@@ -398,7 +397,7 @@ function GalleryUploadForm() {
               <>
                 <Plus className="mb-2 h-8 w-8 text-amber-400" />
                 <span className="text-xs font-medium text-amber-100 text-center">Add Image</span>
-                <span className="text-xs text-amber-200/70 mt-1">Camera or Gallery</span>
+                <span className="text-xs text-amber-200/70 mt-1">Gallery Photos</span>
               </>
             )}
           </label>
