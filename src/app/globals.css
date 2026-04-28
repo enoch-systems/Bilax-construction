@@ -47,3 +47,31 @@ html {
   -ms-overflow-style: none !important;  /* IE and Edge */
   scrollbar-width: none !important;  /* Firefox */
 }
+
+/* Prevent zoom on input focus in mobile */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+input[type="password"],
+textarea,
+select {
+  font-size: 16px !important;
+  transform: scale(1) !important;
+  -webkit-transform: scale(1) !important;
+  -webkit-text-size-adjust: 100% !important;
+  -ms-text-size-adjust: 100% !important;
+  text-size-adjust: 100% !important;
+}
+
+/* Prevent viewport zoom on focus */
+@viewport {
+  zoom: 1.0;
+  width: device-width;
+}
+
+/* Prevent mobile zoom on input focus */
+@-moz-viewport {
+  width: device-width;
+  zoom: 1.0;
+}
