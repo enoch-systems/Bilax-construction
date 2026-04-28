@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 
 interface FormProps {
   onClose?: () => void;
@@ -99,17 +100,15 @@ export default function Form({ onClose }: FormProps) {
             router.push('/');
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
-          whileHover={{ scale: 1.1 }}
+          whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="cursor-pointer absolute top-0 right-0 text-slate-400 hover:text-white transition-colors z-10"
+          className="cursor-pointer absolute top-2 left-2 md:top-4 md:left-4 text-slate-400 hover:text-white transition-colors z-10 bg-slate-800/50 p-2 rounded-full backdrop-blur-sm"
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
+          <ArrowLeft className="w-5 h-5 md:w-6 md:h-6" />
         </motion.button>
       )}
 
-      <div className="pt-15 mb-6 md:mb-8">
+      <div className="pt-12 md:pt-16 mb-6 md:mb-8">
         <h2 className="mb-3 md:mb-4 text-2xl font-light tracking-wide text-white uppercase md:text-3xl lg:text-4xl">
           Start Your <span className="font-semibold text-amber-400">Project</span>
         </h2>

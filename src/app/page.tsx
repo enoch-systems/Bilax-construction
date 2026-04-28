@@ -69,7 +69,7 @@ export default function Home() {
 
       {isFormOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/90 backdrop-blur-sm p-4 md:p-6">
-          <div className="relative w-full max-w-lg rounded-lg border border-white/10 bg-slate-900/95 p-3 md:p-6 shadow-2xl max-h-[95vh] overflow-y-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          <div className="relative w-full max-w-lg rounded-lg border border-white/10 bg-slate-950/98 p-3 md:p-6 shadow-2xl max-h-[95vh] overflow-y-auto" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             <Form onClose={handleCloseForm} />
           </div>
         </div>
