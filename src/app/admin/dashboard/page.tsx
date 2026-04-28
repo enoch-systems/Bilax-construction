@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import { Upload, Image as ImageIcon, Video, Plus, Edit, Trash2 } from "lucide-react";
 import Image from "next/image";
@@ -15,6 +15,7 @@ export default function AdminDashboardPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeTab, setActiveTab] = useState<"gallery" | "projects">("gallery");
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     console.log('Dashboard useEffect triggered');
@@ -86,6 +87,14 @@ export default function AdminDashboardPage() {
 
     return () => subscription.unsubscribe();
   }, [router]);
+
+  // Handle tab parameter from URL
+  useEffect(() => {
+    const tab = searchParams.get('tab');
+    if (tab === 'gallery' || tab === 'projects') {
+      setActiveTab(tab);
+    }
+  }, [searchParams]);
 
 
   if (!isAuthenticated) {
