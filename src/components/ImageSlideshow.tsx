@@ -23,19 +23,20 @@ export default function ImageSlideshow() {
   }, []);
 
   return (
-    <div className="relative w-full overflow-hidden rounded-sm bg-slate-900/50 min-h-[200px] md:min-h-[300px]">
+    <div className="relative w-full overflow-hidden rounded-sm">
       {cloudinaryImages.map((src, index) => (
         <div
           key={src}
-          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-            index === currentIndex ? "opacity-100" : "opacity-0"
+          className={`transition-opacity duration-1000 ease-in-out ${
+            index === currentIndex ? "opacity-100 relative" : "opacity-0 absolute inset-0"
           }`}
         >
           <Image
             src={src}
             alt={`Engineer ${index + 1}`}
-            fill
-            className="object-cover"
+            width={800}
+            height={600}
+            className="w-full h-auto object-contain"
             sizes="(max-width: 768px) 100vw, 50vw"
             priority={index === 0}
           />
